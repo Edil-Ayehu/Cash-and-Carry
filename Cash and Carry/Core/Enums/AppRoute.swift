@@ -10,4 +10,6 @@ import SwiftUI
 enum AppRoute: Hashable {
     case login
     case register
+    case forgotPassword
+    case resetPassword
 }

@@ -22,6 +22,12 @@ struct MyApp: View {
                     case .register:
                         RegisterView()
                         
+                    case .forgotPassword:
+                        ForgotPasswordView()
+                        
+                    case .resetPassword:
+                        ResetPasswordView()
+                        
                     }
                 }
         }
@@ -37,6 +43,12 @@ struct MyApp: View {
             
         case .register:
             RegisterView()
+            
+        case .forgotPassword:
+            ForgotPasswordView()
+            
+        case .resetPassword:
+            ResetPasswordView()
             
         }
     }

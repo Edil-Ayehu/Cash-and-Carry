@@ -25,6 +25,7 @@ struct AppTextField: View {
                 .frame(width: 20)
 
             TextField(title, text: $text)
+                .font(.custom("Outfit-Regular", size: 16))
                 .keyboardType(keyboard)
                 .autocorrectionDisabled()
                 .textInputAutocapitalization(.never)

@@ -18,7 +18,7 @@ struct CountryCodePicker: View {
             Text("🇿🇦")
 
             Text("+27")
-                .font(.custom("Outfit-SemiBold", size: 16))
+                .font(.custom("Outfit-Medium", size: 16))
 
             Divider()
 
@@ -34,5 +34,6 @@ struct CountryCodePicker: View {
             RoundedRectangle(cornerRadius: 16)
                 .stroke(Color.gray.opacity(0.15))
         )
+        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }
