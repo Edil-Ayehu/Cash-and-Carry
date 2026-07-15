@@ -11,7 +11,7 @@ import SwiftUI
 struct Cash_and_CarryApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MyApp()
         }
     }
 }
