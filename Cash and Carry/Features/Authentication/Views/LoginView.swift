@@ -52,9 +52,11 @@ struct LoginView: View {
                     
                     Spacer().frame(height: 6)
 
-                    PrimaryButton(title: "Sign In") {
-
-                    }
+                    
+                    PrimaryButton(
+                        title: "Sign In",
+                        action: {}
+                    )
 
                 }
                 .padding(.horizontal, 30)

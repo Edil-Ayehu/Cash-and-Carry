@@ -69,9 +69,11 @@ struct RegisterView: View {
                     Spacer()
                         .frame(height: 8)
 
-                    PrimaryButton(title: "Create Account") {
-
-                    }
+                    
+                    PrimaryButton(
+                        title: "Create Account",
+                        action: {}
+                    )
 
                 }
                 .padding(.horizontal, 30)

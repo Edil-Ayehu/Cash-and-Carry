@@ -41,9 +41,12 @@ struct ForgotPasswordView: View {
                     
                     Spacer().frame(height: 8)
                     
-                    PrimaryButton(title: "Send Code", action: {
-                        router.push(.resetPassword)
-                    })
+                    PrimaryButton(
+                        title: "Send Code",
+                        action: {
+                            router.push(.resetPassword)
+                        }
+                    )
 
 
                 }

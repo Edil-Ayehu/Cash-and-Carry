@@ -57,13 +57,13 @@ struct ResetPasswordView: View {
 
                     Spacer()
                         .frame(height: 8)
-
-                    PrimaryButton(title: "Reset Password") {
-
-                        // API Call
-                        // router.push(.login)
-
-                    }
+                    
+                    PrimaryButton(
+                        title: "Reset Password",
+                        action: {
+                            router.setRoot(.login)
+                        }
+                    )
 
                 }
                 .padding(.horizontal, 30)
