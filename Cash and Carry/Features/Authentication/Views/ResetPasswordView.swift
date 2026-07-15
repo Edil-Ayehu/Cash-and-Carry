@@ -26,8 +26,6 @@ struct ResetPasswordView: View {
 
                 Spacer()
 
-                // MARK: Header
-
                 AuthHeader(
                     title: "Reset Password",
                     subtitle: "Enter the verification code sent to your phone and choose a new password."
