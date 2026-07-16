@@ -21,8 +21,7 @@ struct MainTabView: View {
                 }
                 .tag(Tab.home)
 
-//            ProductsView()
-            Text("Products View")
+            ProductsView()
                 .tabItem {
                     Label(Tab.products.title, systemImage: Tab.products.icon)
                 }

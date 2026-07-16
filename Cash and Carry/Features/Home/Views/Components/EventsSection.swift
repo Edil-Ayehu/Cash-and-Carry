@@ -22,6 +22,7 @@ struct EventsSection: View {
                 Button{} label: {
                     Text("See All")
                         .font(.custom("Outfit-Medium", size: 14))
+                        .foregroundColor(.cyan)
                 }
 
 

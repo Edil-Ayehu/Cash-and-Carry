@@ -13,19 +13,21 @@ struct EventCard: View {
         VStack(alignment: .leading, spacing: 0) {
 
             
-            Image("shoes1")
+            Image("event1")
                 .resizable()
                 .scaledToFill()
                 .frame(height: 160)
+            
+            Spacer().frame(height: 6)
 
             VStack(alignment: .leading, spacing: 10) {
 
                 Text("Wedding Event")
                     .font(.custom("Outfit-Medium", size: 14))
-                    .foregroundColor(.pink)
+                    .foregroundColor(.cyan)
 
                 Text("Grand Wedding Banquet")
-                    .font(.custom("Outfit-Medium", size: 18))
+                    .font(.custom("Outfit-Medium", size: 16))
 
                 Label("Sep 17, 2026", systemImage: "calendar")
                     .font(.custom("Outfit-Regular", size: 14))
