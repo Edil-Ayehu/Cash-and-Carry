@@ -13,6 +13,8 @@ final class AppRouter: ObservableObject {
     
     @Published var root: AppRoute = .login
     
+    @Published var showSplash = true
+    
     func push(_ route: AppRoute) {
         path.append(route)
     }
@@ -34,5 +36,9 @@ final class AppRouter: ObservableObject {
     func replace(with route: AppRoute) {
         path = NavigationPath()
         path.append(route)
+    }
+    
+    func finishSplash() {
+        showSplash = false
     }
 }

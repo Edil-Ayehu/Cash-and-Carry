@@ -29,7 +29,7 @@ struct HomeHeader: View {
                             .foregroundColor(.black.opacity(0.9))
 
                         Text("What are we\nordering today?")
-                            .font(.custom("Outfit-Medium", size: 20))
+                            .font(.custom("Outfit-SemiBold", size: 24))
                             .foregroundColor(.black)
 
                     }

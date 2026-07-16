@@ -42,27 +42,33 @@ struct MyApp: View {
     
     @ViewBuilder
     private var rootView: some View {
-        switch router.root {
-        case .login:
-            LoginView()
+        if router.showSplash {
+            SplashView()
+        } else {
             
-            
-        case .register:
-            RegisterView()
-            
-        case .forgotPassword:
-            ForgotPasswordView()
-            
-        case .resetPassword:
-            ResetPasswordView()
-            
-        case .home:
-            HomeView()
-            
-        case .mainTab:
-            MainTabView()
-            
+            switch router.root {
+            case .login:
+                LoginView()
+                
+                
+            case .register:
+                RegisterView()
+                
+            case .forgotPassword:
+                ForgotPasswordView()
+                
+            case .resetPassword:
+                ResetPasswordView()
+                
+            case .home:
+                HomeView()
+                
+            case .mainTab:
+                MainTabView()
+                
+            }
         }
+        
     }
 }
 
