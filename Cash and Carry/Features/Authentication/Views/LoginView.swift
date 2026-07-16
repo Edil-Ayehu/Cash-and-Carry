@@ -6,6 +6,9 @@ struct LoginView: View {
     @State private var password = ""
     
     @EnvironmentObject private var router: AppRouter
+    
+    @State private var isLoading = false
+    
 
     var body: some View {
 
@@ -55,7 +58,8 @@ struct LoginView: View {
                     
                     PrimaryButton(
                         title: "Sign In",
-                        action: {}
+                        isLoading: isLoading,
+                        action: _handleLogin
                     )
 
                 }
@@ -88,6 +92,16 @@ struct LoginView: View {
 
         }
 
+    }
+    
+    func _handleLogin() {
+        isLoading = true
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+            isLoading = false
+            
+            router.setRoot(.home)
+        })
     }
 
 }

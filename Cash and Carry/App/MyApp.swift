@@ -28,6 +28,9 @@ struct MyApp: View {
                     case .resetPassword:
                         ResetPasswordView()
                         
+                    case .home:
+                        HomeView()
+                        
                     }
                 }
         }
@@ -49,6 +52,9 @@ struct MyApp: View {
             
         case .resetPassword:
             ResetPasswordView()
+            
+        case .home:
+            HomeView()
             
         }
     }
