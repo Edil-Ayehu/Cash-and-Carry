@@ -27,8 +27,7 @@ struct MainTabView: View {
                 }
                 .tag(Tab.products)
 
-//            VouchersView()
-            Text("Vouchers View")
+            VouchersView()
                 .tabItem {
                     Label(Tab.vouchers.title, systemImage: Tab.vouchers.icon)
                 }
