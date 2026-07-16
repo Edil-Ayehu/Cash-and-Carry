@@ -100,7 +100,7 @@ struct LoginView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
             isLoading = false
             
-            router.setRoot(.home)
+            router.setRoot(.mainTab)
         })
     }
 

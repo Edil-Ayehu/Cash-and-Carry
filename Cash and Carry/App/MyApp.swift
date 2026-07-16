@@ -31,6 +31,9 @@ struct MyApp: View {
                     case .home:
                         HomeView()
                         
+                    case .mainTab:
+                        MainTabView()
+                        
                     }
                 }
         }
@@ -55,6 +58,9 @@ struct MyApp: View {
             
         case .home:
             HomeView()
+            
+        case .mainTab:
+            MainTabView()
             
         }
     }
