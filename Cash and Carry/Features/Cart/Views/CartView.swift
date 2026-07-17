@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct CartView: View {
+    
+    @Binding var selectedTab: Tab
 
     @State private var items: [CartItem] = [
         CartItem(product: Product.dummyProducts[0], quantity: 1),
@@ -132,6 +134,7 @@ private extension CartView {
                         title: "Browse Products",
                         action: {
                             // Navigate to Products tab
+                            selectedTab = .products
                         },
                         height: 48
                     )

@@ -33,7 +33,7 @@ struct MainTabView: View {
                 }
                 .tag(Tab.vouchers)
 
-            CartView()
+            CartView(selectedTab: $selectedTab)
                 .tabItem {
                     Label(Tab.cart.title, systemImage: Tab.cart.icon)
                 }
