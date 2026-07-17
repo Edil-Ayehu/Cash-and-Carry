@@ -1,17 +1,19 @@
 //
-//  PrimaryButton.swift
+//  OutlinedButton.swift
 //  Cash and Carry
 //
-//  Created by Edil on 15/07/2026.
+//  Created by Edil on 17/07/2026.
 //
 
 import SwiftUI
 
-struct PrimaryButton: View {
+struct OutlinedButton: View {
 
     let title: String
     var isLoading: Bool = false
     var isEnabled: Bool = true
+    var borderColor: Color = .black
+    var textColor: Color = .black
     let action: () -> Void
     var height: CGFloat = 58
 
@@ -24,24 +26,31 @@ struct PrimaryButton: View {
                 if isLoading {
 
                     ProgressView()
-                        .tint(.white)
+                        .tint(borderColor)
 
                 } else {
 
                     Text(title)
                         .font(.custom("Outfit-Medium", size: 16))
-                        .foregroundStyle(.white)
-
+                        .foregroundColor(
+                            isEnabled
+                            ? textColor
+                            : Color.gray
+                        )
                 }
-
             }
             .frame(maxWidth: .infinity)
             .frame(height: height)
-            .background(
-                isEnabled ? Color.black : Color.gray.opacity(0.5)
+            .background(Color.white)
+            .overlay(
+                Capsule()
+                    .stroke(
+                        isEnabled
+                        ? borderColor
+                        : Color.gray.opacity(0.5),
+                        lineWidth: 1.5
+                    )
             )
-            .clipShape(Capsule())
-
         }
         .disabled(isLoading || !isEnabled)
         .animation(.easeInOut(duration: 0.2), value: isLoading)
