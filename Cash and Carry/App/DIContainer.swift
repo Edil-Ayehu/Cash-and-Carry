@@ -24,14 +24,29 @@ final class DIContainer {
     
     // Repositories
     
+    lazy var authRepository: AuthRepository = {
+        AuthRepositoryImpl(
+            authService: authService,
+            tokenStorage: tokenStorage
+        )
+    } ()
+    
     // MARK: Services
     
     lazy var apiClient: APIClient = {
         APIClient(interceptor: authInterceptor)
     } ()
     
+    lazy var authService: AuthService = {
+        AuthServiceImpl(apiClient: apiClient)
+    } ()
+    
     
     // MARK: ViewModels
+    
+    func makeLoginViewModel() -> LoginViewModel {
+        LoginViewModel(authRepository: authRepository)
+    }
     
     
 }

@@ -6,3 +6,9 @@
 //
 
 
+enum APIEndpoints {
+
+    static let baseURL = "https://cash-carry-smart-ordering-system.onrender.com"
+
+    static let login = "\(baseURL)/auth/login"
+}

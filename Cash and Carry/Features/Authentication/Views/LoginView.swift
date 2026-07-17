@@ -9,6 +9,8 @@ struct LoginView: View {
     
     @State private var isLoading = false
     
+    @StateObject private var loginVM = DIContainer.shared.makeLoginViewModel()
+    
 
     var body: some View {
 
@@ -59,7 +61,7 @@ struct LoginView: View {
                     
                     PrimaryButton(
                         title: "Sign In",
-                        isLoading: isLoading,
+                        isLoading: loginVM.isLoading,
                         action: _handleLogin
                     )
 
@@ -93,17 +95,28 @@ struct LoginView: View {
             }
 
         }
+        .alert("Error", isPresented: Binding(
+            get: {loginVM.errorMessage != nil},
+            set: {_ in loginVM.errorMessage = nil}
+        )) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(loginVM.errorMessage ?? "Something went wrong. Please try again later.")
+                .font(.custom("Outfit-Regular", size: 14))
+        }
+        
+        .onChange(of: loginVM.isLoggedIn) { _, isLoggedIn in
+            if isLoggedIn {
+                router.setRoot(.mainTab)
+            }
+        }
 
     }
     
     func _handleLogin() {
-        isLoading = true
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-            isLoading = false
-            
-            router.setRoot(.mainTab)
-        })
+        Task {
+            await loginVM.login(phone: phone, password: password)
+        }
     }
 
 }
