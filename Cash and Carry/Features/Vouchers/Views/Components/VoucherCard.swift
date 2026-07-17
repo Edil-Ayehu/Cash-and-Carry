@@ -22,8 +22,8 @@ struct VoucherCard: View {
                 ZStack {
 
                     Circle()
-                        .fill(Color.cyan.opacity(0.12))
-                        .frame(width: 44, height: 44)
+                        .fill(Color.white.opacity(0.12))
+                        .frame(width: 40, height: 40)
 
                     Image(systemName: "basket")
                         .foregroundColor(.white)

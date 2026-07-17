@@ -37,8 +37,8 @@ struct VouchersView: View {
 
                 HStack {
 
-                    Text(selectedTab == 0 ? "Pending Vouchers" : "Redeemed Vouchers")
-                        .font(.custom("Outfit-Medium", size: 18))
+                    Text(selectedTab == 0 ? "Pending Vouchers" : "Completed Vouchers")
+                        .font(.custom("Outfit-Medium", size: 16))
 
                     Spacer()
 
@@ -65,7 +65,7 @@ struct VouchersView: View {
 
             tabButton(title: "Pending", index: 0)
 
-            tabButton(title: "Redeemed", index: 1)
+            tabButton(title: "Completed", index: 1)
         }
         .padding(4)
         .background(Color.white)
@@ -90,7 +90,7 @@ struct VouchersView: View {
                 .font(.custom("Outfit-Medium", size: 16))
                 .foregroundColor(selectedTab == index ? .white : .black.opacity(0.8))
                 .frame(maxWidth: .infinity)
-                .frame(height: 52)
+                .frame(height: 48)
                 .background(
                     selectedTab == index
                     ? Color.black
