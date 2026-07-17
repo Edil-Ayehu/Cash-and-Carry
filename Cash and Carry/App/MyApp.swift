@@ -37,6 +37,9 @@ struct MyApp: View {
                     case .productDetails(let product):
                         ProductDetailsView(product: product)
                         
+                    case .changePassword:
+                        ChangePasswordView()
+                        
                     }
                 }
         }
@@ -71,6 +74,9 @@ struct MyApp: View {
                 
             case .productDetails(let product):
                 ProductDetailsView(product: product)
+                
+            case .changePassword:
+                ChangePasswordView()
                 
             }
         }

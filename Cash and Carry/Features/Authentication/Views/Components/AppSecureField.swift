@@ -10,6 +10,7 @@ import SwiftUI
 struct AppSecureField: View {
 
     let title: String
+    var prefixIcon: String = "lock"
 
     @Binding var text: String
 
@@ -19,7 +20,7 @@ struct AppSecureField: View {
 
         HStack {
 
-            Image(systemName: "lock")
+            Image(systemName: prefixIcon)
                 .foregroundStyle(.gray)
                 .frame(width: 20)
 

@@ -15,4 +15,5 @@ enum AppRoute: Hashable {
     case home
     case mainTab
     case productDetails(Product)
+    case changePassword
 }

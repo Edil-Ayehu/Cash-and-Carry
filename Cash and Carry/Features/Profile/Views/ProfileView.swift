@@ -10,6 +10,8 @@ import SwiftUI
 struct ProfileView: View {
 
     @State private var showLogoutAlert = false
+    
+    @EnvironmentObject private var router: AppRouter
 
     var body: some View {
 
@@ -129,7 +131,7 @@ private extension ProfileView {
                         icon: "key",
                         title: "Change Password"
                     ) {
-
+                        router.push(.changePassword)
                     }
             
                    ProfileMenuRow(
