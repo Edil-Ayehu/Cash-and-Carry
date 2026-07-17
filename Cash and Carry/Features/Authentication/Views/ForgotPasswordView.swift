@@ -64,6 +64,7 @@ struct ForgotPasswordView: View {
 
                         Text("Back to Sign In")
                             .font(.custom("Outfit-Medium", size: 16))
+                            .foregroundColor(Color.cyan)
 
                     }
 

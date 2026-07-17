@@ -93,6 +93,7 @@ struct RegisterView: View {
 
                         Text("Sign In")
                             .font(.custom("Outfit-Bold", size: 16))
+                            .foregroundColor(Color.cyan)
 
                     }
 

@@ -39,8 +39,7 @@ struct MainTabView: View {
                 }
                 .tag(Tab.cart)
 
-//            ProfileView()
-            Text("Profile View")
+            ProfileView()
                 .tabItem {
                     Label(Tab.profile.title, systemImage: Tab.profile.icon)
                 }

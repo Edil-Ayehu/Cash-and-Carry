@@ -82,6 +82,7 @@ struct ResetPasswordView: View {
 
                         Text("Back")
                             .font(.custom("Outfit-Medium", size: 16))
+                            .foregroundColor(Color.cyan)
 
                     }
 

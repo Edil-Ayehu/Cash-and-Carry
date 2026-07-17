@@ -48,7 +48,8 @@ struct LoginView: View {
                             router.push(.forgotPassword)
                         } label: {
                             Text("Forgot Password?")
-                                .font(.custom("Outfit-Medium", size: 16))
+                                .font(.custom("Outfit-SemiBold", size: 16))
+                                .foregroundColor(Color.cyan)
                         }
 
                     }
@@ -81,6 +82,7 @@ struct LoginView: View {
                     } label: {
                         Text("Sign Up")
                             .font(.custom("Outfit-Bold", size: 16))
+                            .foregroundColor(Color.cyan)
                     }
 
                 }
