@@ -46,6 +46,7 @@ struct ProfileView: View {
 
             Button("Logout", role: .destructive) {
                 // Logout
+                router.setRoot(.login)
             }
 
         } message: {
