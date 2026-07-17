@@ -10,6 +10,8 @@ struct ProductsSection: View {
 
     let columns: [GridItem]
     let products: [Product]
+    
+    @EnvironmentObject var router: AppRouter
 
     var body: some View {
 
@@ -34,6 +36,9 @@ struct ProductsSection: View {
 
                 ForEach(products) { product in
                     ProductCard(product: product)
+                        .onTapGesture {
+                            router.push(.productDetails(product))
+                        }
                 }
 
             }
