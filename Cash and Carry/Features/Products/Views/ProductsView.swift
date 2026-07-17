@@ -22,6 +22,8 @@ struct ProductsView: View {
         "Soft Drinks",
         "Energy drinks"
     ]
+    
+    @EnvironmentObject private var router: AppRouter
 
     var body: some View {
 
@@ -42,6 +44,9 @@ struct ProductsView: View {
                     ForEach(Product.dummyProducts) { product in
 
                         ProductCard(product: product)
+                            .onTapGesture {
+                                router.push(.productDetails(product))
+                            }
                     }
                 }
             }

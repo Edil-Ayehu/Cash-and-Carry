@@ -34,6 +34,9 @@ struct MyApp: View {
                     case .mainTab:
                         MainTabView()
                         
+                    case .productDetails(let product):
+                        ProductDetailsView(product: product)
+                        
                     }
                 }
         }
@@ -65,6 +68,9 @@ struct MyApp: View {
                 
             case .mainTab:
                 MainTabView()
+                
+            case .productDetails(let product):
+                ProductDetailsView(product: product)
                 
             }
         }
