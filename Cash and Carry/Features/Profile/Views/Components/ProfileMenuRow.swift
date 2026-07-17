@@ -11,6 +11,7 @@ struct ProfileMenuRow: View {
 
     let icon: String
     let title: String
+    var isLogout: Bool = false
     let action: () -> Void
 
     var body: some View {
@@ -22,16 +23,19 @@ struct ProfileMenuRow: View {
                 Image(systemName: icon)
                     .font(.system(size: 18))
                     .frame(width: 28)
-                    .foregroundColor(.black)
+                    .foregroundColor(isLogout ? .red : .black)
 
                 Text(title)
-                    .font(.custom("Outfit-Regular", size: 16))
-                    .foregroundColor(.black)
+                    .font(.custom("Outfit-Medium", size: 14))
+                    .foregroundColor(isLogout ? .red : .black)
 
                 Spacer()
-
+                
                 Image(systemName: "chevron.right")
-                    .foregroundColor(.black)
+                    .foregroundColor(isLogout ? .red : .black)
+                
+
+                
             }
             .padding(.vertical, 10)
         }

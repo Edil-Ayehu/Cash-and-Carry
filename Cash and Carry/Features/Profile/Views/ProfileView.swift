@@ -33,18 +33,6 @@ struct ProfileView: View {
 
                     Spacer(minLength: 20)
 
-                    Button {
-                        showLogoutAlert = true
-                    } label: {
-
-                        Text("Logout")
-                            .font(.custom("Outfit-Medium", size: 18))
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 56)
-                            .background(Color.red)
-                            .clipShape(Capsule())
-                    }
                 }
                 .padding()
             }
@@ -60,13 +48,14 @@ struct ProfileView: View {
 
         } message: {
             Text("Are you sure you want to logout?")
+                .font(.custom("Outfit-Regular", size: 12))
         }
     }
 }
 
 private extension ProfileView {
     var profileHeader: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 8) {
 
                     ZStack {
 
@@ -75,7 +64,7 @@ private extension ProfileView {
                             .frame(width: 80, height: 80)
 
                         Text("ET")
-                            .font(.custom("Outfit-SemiBold", size: 36))
+                            .font(.custom("Outfit-SemiBold", size: 26))
                             .foregroundColor(.white)
                     }
 
@@ -106,7 +95,7 @@ private extension ProfileView {
         VStack(alignment: .leading, spacing: 24) {
 
                     Text("Account Information")
-                        .font(.custom("Outfit-Medium", size: 18))
+                        .font(.custom("Outfit-Medium", size: 16))
 
                     ProfileInfoRow(
                         icon: "phone",
@@ -127,7 +116,7 @@ private extension ProfileView {
         VStack(alignment: .leading, spacing: 18) {
 
                     Text("Preferences")
-                        .font(.custom("Outfit-Medium", size: 18))
+                        .font(.custom("Outfit-Medium", size: 16))
 
                     ProfileMenuRow(
                         icon: "square.and.pencil",
@@ -141,6 +130,14 @@ private extension ProfileView {
                         title: "Change Password"
                     ) {
 
+                    }
+            
+                   ProfileMenuRow(
+                      icon: "iphone.and.arrow.forward.outward",
+                      title: "Logout",
+                      isLogout: true
+                   ) {
+                       showLogoutAlert = true
                     }
                 }
     }

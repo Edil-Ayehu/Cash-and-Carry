@@ -29,7 +29,7 @@ struct ProfileInfoRow: View {
                     .foregroundColor(.gray)
 
                 Text(value)
-                    .font(.custom("Outfit-Medium", size: 16))
+                    .font(.custom("Outfit-Medium", size: 14))
             }
 
             Spacer()
