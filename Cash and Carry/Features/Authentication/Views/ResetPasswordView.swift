@@ -6,14 +6,27 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct ResetPasswordView: View {
+    
+    let phone: String
 
     @State private var verificationCode = ""
     @State private var newPassword = ""
     @State private var confirmPassword = ""
+    
+    @State private var showSuccessAlert: Bool = false
 
     @EnvironmentObject private var router: AppRouter
+    
+    @StateObject private var resetPasswordVM = DIContainer.shared.makeResetPasswordViewModel()
+    
+    var isFormValid : Bool {
+        !verificationCode.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+        !newPassword.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+        newPassword.count >= 6
+    }
 
     var body: some View {
 
@@ -60,9 +73,9 @@ struct ResetPasswordView: View {
                     
                     PrimaryButton(
                         title: "Reset Password",
-                        action: {
-                            router.setRoot(.login)
-                        }
+                        isLoading: resetPasswordVM.isLoading,
+                        isEnabled: isFormValid,
+                        action: _handleResetPassword,
                     )
 
                 }
@@ -93,5 +106,56 @@ struct ResetPasswordView: View {
 
         }
         .navigationBarBackButtonHidden()
+        .onChange(of: resetPasswordVM.passwordReseted) {_, passwordReseted in
+            if passwordReseted {
+                showSuccessAlert = true
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                    router.setRoot(.login)
+                })
+            }
+        }
+        .alert("Error", isPresented: Binding(
+            get: {resetPasswordVM.errorMessage != nil},
+            set: { _ in resetPasswordVM.errorMessage = nil}
+        )) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(resetPasswordVM.errorMessage ?? "Something went wrong. Please try again later.")
+        }
+        
+        .toast(isPresenting: $showSuccessAlert) {
+            AlertToast(
+                displayMode: .hud,
+                type: .complete(.green),
+                title: "Password reset successfully!"
+            )
+        }
+    }
+    
+    func _handleResetPassword() {
+        
+        guard !verificationCode.isEmpty else {
+            resetPasswordVM.errorMessage = "Verification code is required."
+            return
+        }
+        
+        guard verificationCode.count == 6 else {
+            resetPasswordVM.errorMessage = "Verification code must be 6 digits long."
+            return
+        }
+        
+        guard newPassword == confirmPassword else {
+            resetPasswordVM.errorMessage = "New passwords do not match."
+            return
+        }
+        
+        Task {
+            await resetPasswordVM.resetPassword(
+                phone: phone,
+                code: verificationCode,
+                newPassword: newPassword
+            )
+        }
     }
 }

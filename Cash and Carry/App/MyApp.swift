@@ -25,8 +25,8 @@ struct MyApp: View {
                     case .forgotPassword:
                         ForgotPasswordView()
                         
-                    case .resetPassword:
-                        ResetPasswordView()
+                    case .resetPassword(let phone):
+                        ResetPasswordView(phone: phone)
                         
                     case .home:
                         HomeView()
@@ -63,8 +63,8 @@ struct MyApp: View {
             case .forgotPassword:
                 ForgotPasswordView()
                 
-            case .resetPassword:
-                ResetPasswordView()
+            case .resetPassword(let phone):
+                ResetPasswordView(phone: phone)
                 
             case .home:
                 HomeView()

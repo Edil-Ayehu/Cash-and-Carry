@@ -11,7 +11,7 @@ enum AppRoute: Hashable {
     case login
     case register
     case forgotPassword
-    case resetPassword
+    case resetPassword(String)
     case home
     case mainTab
     case productDetails(Product)

@@ -19,6 +19,10 @@ protocol AuthService {
     func forgotPassword(
         request: ForgotPasswordRequest
     ) async throws -> ForgotPasswordResponse
+    
+    func resetPassword(
+        request: ResetPasswordRequest
+    ) async throws -> ResetPasswordResponse
 }
 
 
@@ -55,6 +59,16 @@ final class AuthServiceImpl: AuthService {
     ) async throws -> ForgotPasswordResponse {
         try await apiClient.request(
             endpoint: APIEndpoints.forgotPassword,
+            method: "POST",
+            body: request
+        )
+    }
+    
+    func resetPassword(
+        request: ResetPasswordRequest
+    ) async throws -> ResetPasswordResponse {
+        try await apiClient.request(
+            endpoint: APIEndpoints.resetPassword,
             method: "POST",
             body: request
         )

@@ -64,4 +64,20 @@ final class AuthRepositoryImpl: AuthRepository {
         
         return response
     }
+    
+    func resetPassword(
+        phone: String,
+        code: String,
+        newPassword: String
+    ) async throws -> ResetPasswordResponse {
+        let request = ResetPasswordRequest(
+            phone: phone,
+            code: code,
+            newPassword: newPassword
+        )
+        
+        let response = try await authService.resetPassword(request: request)
+        
+        return response
+    }
 }

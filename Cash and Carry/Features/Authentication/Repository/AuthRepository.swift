@@ -23,4 +23,11 @@ protocol AuthRepository {
     func forgotPassword(
         phone: String
     ) async throws -> ForgotPasswordResponse
+    
+    
+    func resetPassword(
+        phone: String,
+        code: String,
+        newPassword: String
+    ) async throws -> ResetPasswordResponse
 }

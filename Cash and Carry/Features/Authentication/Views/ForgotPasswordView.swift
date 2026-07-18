@@ -90,7 +90,7 @@ struct ForgotPasswordView: View {
                 showSuccessAlert = true
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-                    router.push(.resetPassword)
+                    router.push(.resetPassword(phone))
                 })
             }
             
