@@ -7,9 +7,15 @@ struct LoginView: View {
     
     @EnvironmentObject private var router: AppRouter
     
-    @State private var isLoading = false
     
     @StateObject private var loginVM = DIContainer.shared.makeLoginViewModel()
+    
+    var isFormValid: Bool {
+        !phone.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+        phone.count >= 9 &&
+        !password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+            password.count >= 6
+    }
     
 
     var body: some View {
@@ -62,6 +68,7 @@ struct LoginView: View {
                     PrimaryButton(
                         title: "Sign In",
                         isLoading: loginVM.isLoading,
+                        isEnabled: isFormValid,
                         action: _handleLogin
                     )
 
@@ -114,6 +121,23 @@ struct LoginView: View {
     }
     
     func _handleLogin() {
+        let trimmedPhone = phone.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        guard !trimmedPhone.isEmpty else {
+            loginVM.errorMessage = "Please enter your phone number."
+            return
+        }
+        
+        guard !password.isEmpty else {
+            loginVM.errorMessage = "Please enter your password."
+            return
+        }
+        
+        guard password.count >= 6 else {
+              loginVM.errorMessage = "Password must be at least 6 characters long."
+                return
+            }
+        
         Task {
             await loginVM.login(phone: phone, password: password)
         }

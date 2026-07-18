@@ -134,16 +134,6 @@ struct RegisterView: View {
         }
     }
     
-//    func _handleRegister() {
-//        Task {
-//            await registerVM.register(
-//                name: fullName,
-//                phone: phone,
-//                email: email,
-//                password: password
-//            )
-//        }
-//    }
     func _handleRegister() {
 
         let trimmedName = fullName.trimmingCharacters(in: .whitespacesAndNewlines)
