@@ -9,7 +9,7 @@ import Foundation
 
 @MainActor
 final class RegisterViewModel: ObservableObject {
-    @Published var isRegister: Bool = false
+    @Published var isRegistered: Bool = false
     
     @Published var isLoading: Bool = false
     
@@ -44,7 +44,7 @@ final class RegisterViewModel: ObservableObject {
                 password: password
             )
             
-            isRegister = true
+            isRegistered = true
         } catch {
             if let apiError = error as? APIError {
             errorMessage = apiError.localizedDescription

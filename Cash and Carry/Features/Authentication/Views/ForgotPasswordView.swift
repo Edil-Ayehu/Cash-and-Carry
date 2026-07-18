@@ -12,6 +12,13 @@ struct ForgotPasswordView: View {
     @State private var phone = ""
 
     @EnvironmentObject private var router: AppRouter
+    
+    @StateObject private var forgotPasswordVM = DIContainer.shared.makeForgotPasswordViewModel()
+    
+    var isFormValid: Bool {
+        !phone.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+        phone.count >= 9
+    }
 
     var body: some View {
 
@@ -43,9 +50,9 @@ struct ForgotPasswordView: View {
                     
                     PrimaryButton(
                         title: "Send Code",
-                        action: {
-                            router.push(.resetPassword)
-                        }
+                        isLoading: forgotPasswordVM.isLoading,
+                        isEnabled: isFormValid,
+                        action: _handleSendCode
                     )
 
 
@@ -75,6 +82,34 @@ struct ForgotPasswordView: View {
 
         }
         .navigationBarBackButtonHidden()
+        .onChange(of: forgotPasswordVM.isOTPSent) { _, isOTPSent in
+            if isOTPSent {
+                router.push(.resetPassword)
+            }
+            
+        }
+        .alert("Error", isPresented: Binding(
+            get: {forgotPasswordVM.errorMessage != nil},
+            set: {_ in forgotPasswordVM.errorMessage = nil}
+        )
+        ) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(forgotPasswordVM.errorMessage ?? "Something went wrong. Please try again later.")
+        }
+    }
+    
+    func _handleSendCode() {
+        let trimmedPhone = phone.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        guard !trimmedPhone.isEmpty else {
+            forgotPasswordVM.errorMessage = "Please enter your phone number."
+            return
+        }
+        
+        Task {
+            await forgotPasswordVM.forgotPassword(phone: phone)
+        }
     }
 }
 

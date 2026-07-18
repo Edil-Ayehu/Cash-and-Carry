@@ -13,4 +13,5 @@ enum APIEndpoints {
     // MARK: Auth
     static let login = "\(baseURL)/auth/login"
     static let register = "\(baseURL)/auth/register"
+    static let forgotPassword = "\(baseURL)/auth/forgot-password"
 }

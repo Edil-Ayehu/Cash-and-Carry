@@ -116,8 +116,8 @@ struct RegisterView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
-        .onChange(of: registerVM.isRegister) {_, isRegister in
-            if isRegister {
+        .onChange(of: registerVM.isRegistered) {_, isRegistered in
+            if isRegistered {
                 router.setRoot(.login)
             }
         }

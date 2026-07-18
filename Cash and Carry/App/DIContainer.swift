@@ -51,4 +51,8 @@ final class DIContainer {
     func makeRegisterViewModel() -> RegisterViewModel {
         RegisterViewModel(authRepository: authRepository)
     }
+    
+    func makeForgotPasswordViewModel() -> ForgotPasswordViewModel {
+        ForgotPasswordViewModel(authRepository: authRepository)
+    }
 }

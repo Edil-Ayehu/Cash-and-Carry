@@ -52,4 +52,16 @@ final class AuthRepositoryImpl: AuthRepository {
         
         return response
     }
+    
+    func forgotPassword(
+        phone: String
+    ) async throws -> ForgotPasswordResponse {
+        let request = ForgotPasswordRequest(
+            phone: phone
+        )
+        
+        let response = try await authService.forgotPassword(request: request)
+        
+        return response
+    }
 }
