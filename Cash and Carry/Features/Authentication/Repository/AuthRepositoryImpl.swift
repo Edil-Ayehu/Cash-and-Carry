@@ -33,4 +33,23 @@ final class AuthRepositoryImpl: AuthRepository {
         
         return response
     }
+    
+    func register(
+        phone: String,
+        email: String?,
+        name: String,
+        password: String,
+    ) async throws -> RegisterResponse {
+        
+        let request = RegisterRequest(
+            name: name,
+            phone: phone,
+            email: email,
+            password: password
+        )
+        
+        let response = try await authService.register(request: request)
+        
+        return response
+    }
 }

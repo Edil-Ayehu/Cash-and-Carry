@@ -16,6 +16,8 @@ struct RegisterView: View {
     @State private var confirmPassword = ""
     
     @EnvironmentObject var router: AppRouter
+    
+    @StateObject private var registerVM = DIContainer.shared.makeRegisterViewModel()
 
     var body: some View {
 
@@ -72,7 +74,8 @@ struct RegisterView: View {
                     
                     PrimaryButton(
                         title: "Create Account",
-                        action: {}
+                        isLoading: registerVM.isLoading,
+                        action: _handleRegister
                     )
 
                 }
@@ -105,6 +108,33 @@ struct RegisterView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        .onChange(of: registerVM.isRegister) {_, isRegister in
+            if isRegister {
+                router.setRoot(.login)
+            }
+        }
+        .alert(
+            "Error",
+            isPresented: Binding(
+                get: { registerVM.errorMessage != nil},
+                set: { _ in registerVM.errorMessage = nil}
+            )
+        ) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(registerVM.errorMessage ?? "Something went wrong!")
+        }
+    }
+    
+    func _handleRegister() {
+        Task {
+            await registerVM.register(
+                name: fullName,
+                phone: phone,
+                email: email,
+                password: password
+            )
+        }
     }
 }
 

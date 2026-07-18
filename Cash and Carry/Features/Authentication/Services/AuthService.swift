@@ -11,6 +11,10 @@ protocol AuthService {
     func login(
         request: LoginRequest
     ) async throws -> LoginResponse
+    
+    func register(
+        request: RegisterRequest
+    ) async throws -> RegisterResponse
 }
 
 
@@ -27,6 +31,16 @@ final class AuthServiceImpl: AuthService {
     ) async throws -> LoginResponse {
         try await apiClient.request(
             endpoint: APIEndpoints.login,
+            method: "POST",
+            body: request
+        )
+    }
+    
+    func register(
+        request: RegisterRequest
+    ) async throws -> RegisterResponse {
+        try await apiClient.request(
+            endpoint: APIEndpoints.register,
             method: "POST",
             body: request
         )
