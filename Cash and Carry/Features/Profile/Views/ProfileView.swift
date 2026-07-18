@@ -12,7 +12,9 @@ struct ProfileView: View {
     @State private var showLogoutAlert = false
     
     @EnvironmentObject private var router: AppRouter
-
+    
+    @StateObject private var logoutVM = DIContainer.shared.makeLogoutViewModel()
+        
     var body: some View {
 
         VStack(spacing: 0) {
@@ -46,12 +48,39 @@ struct ProfileView: View {
 
             Button("Logout", role: .destructive) {
                 // Logout
-                router.setRoot(.login)
+                Task {
+                    logoutVM.logout()
+                }
             }
 
         } message: {
             Text("Are you sure you want to logout?")
                 .font(.custom("Outfit-Regular", size: 12))
+        }
+        .onChange(of: logoutVM.isLoggedOut) {_, isLoggedOut in
+            if isLoggedOut {
+                router.setRoot(.login)
+            }
+            
+        }
+        
+        .overlay {
+            if logoutVM.isLoading {
+                ZStack {
+                    Color.black.opacity(0.25)
+                        .ignoresSafeArea()
+                    
+                    VStack (spacing: 16) {
+                        ProgressView()
+                        
+                        Text("Logging out...")
+                            .font(.custom("Outfit-Medium", size: 16))
+                    }
+                    .padding(30)
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                }
+            }
         }
     }
 }

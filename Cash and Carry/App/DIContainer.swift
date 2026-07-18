@@ -59,4 +59,8 @@ final class DIContainer {
     func makeResetPasswordViewModel() -> ResetPasswordViewModel {
         ResetPasswordViewModel(authRepository: authRepository)
     }
+    
+    func makeLogoutViewModel() -> LogoutViewModel {
+        LogoutViewModel(authRepository: authRepository)
+    }
 }

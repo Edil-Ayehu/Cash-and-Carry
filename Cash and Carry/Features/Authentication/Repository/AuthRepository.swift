@@ -30,4 +30,6 @@ protocol AuthRepository {
         code: String,
         newPassword: String
     ) async throws -> ResetPasswordResponse
+    
+    func logout()
 }

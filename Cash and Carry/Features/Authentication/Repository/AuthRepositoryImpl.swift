@@ -80,4 +80,8 @@ final class AuthRepositoryImpl: AuthRepository {
         
         return response
     }
+    
+    func logout() {
+        tokenStorage.clear()
+    }
 }
