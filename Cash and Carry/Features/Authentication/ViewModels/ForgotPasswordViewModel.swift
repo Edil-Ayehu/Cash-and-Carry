@@ -14,6 +14,7 @@ final class ForgotPasswordViewModel: ObservableObject {
     @Published var isOTPSent: Bool = false
     
     @Published var errorMessage: String?
+    @Published var successMessage: String?
     
     private var authRepository: AuthRepository
     
@@ -32,9 +33,12 @@ final class ForgotPasswordViewModel: ObservableObject {
         }
         
         do {
-            let _ = try await authRepository.forgotPassword(phone: "+27\(phone)")
+            let response = try await authRepository.forgotPassword(phone: "+27\(phone)")
+            
             
             isOTPSent = true
+            successMessage = response.message
+            
         }catch {
             errorMessage = error.localizedDescription
         }

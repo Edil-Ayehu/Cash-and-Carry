@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct ForgotPasswordView: View {
 
@@ -14,6 +15,8 @@ struct ForgotPasswordView: View {
     @EnvironmentObject private var router: AppRouter
     
     @StateObject private var forgotPasswordVM = DIContainer.shared.makeForgotPasswordViewModel()
+    
+    @State private var showSuccessAlert: Bool = false
     
     var isFormValid: Bool {
         !phone.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
@@ -84,7 +87,11 @@ struct ForgotPasswordView: View {
         .navigationBarBackButtonHidden()
         .onChange(of: forgotPasswordVM.isOTPSent) { _, isOTPSent in
             if isOTPSent {
-                router.push(.resetPassword)
+                showSuccessAlert = true
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                    router.push(.resetPassword)
+                })
             }
             
         }
@@ -96,6 +103,14 @@ struct ForgotPasswordView: View {
             Button("OK", role: .cancel) {}
         } message: {
             Text(forgotPasswordVM.errorMessage ?? "Something went wrong. Please try again later.")
+        }
+        
+        .toast(isPresenting: $showSuccessAlert) {
+            AlertToast(
+                displayMode: .hud,
+                type: .complete(.green),
+                title: forgotPasswordVM.successMessage
+            )
         }
     }
     
@@ -112,4 +127,5 @@ struct ForgotPasswordView: View {
         }
     }
 }
+
 

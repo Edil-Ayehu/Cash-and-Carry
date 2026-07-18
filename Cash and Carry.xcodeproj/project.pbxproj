@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		21DC8376300BD16B0080E3D1 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 21DC8375300BD16B0080E3D1 /* AlertToast */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		2177B90C300761A500670FAD /* Cash and Carry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cash and Carry.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21DC8376300BD16B0080E3D1 /* AlertToast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = "Cash and Carry";
 			packageProductDependencies = (
+				21DC8375300BD16B0080E3D1 /* AlertToast */,
 			);
 			productName = "Cash and Carry";
 			productReference = 2177B90C300761A500670FAD /* Cash and Carry.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = 2177B903300761A500670FAD;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				21DC8374300BD16B0080E3D1 /* XCRemoteSwiftPackageReference "AlertToast" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2177B90D300761A500670FAD /* Products */;
 			projectDirPath = "";
@@ -326,6 +335,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		21DC8374300BD16B0080E3D1 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.9;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		21DC8375300BD16B0080E3D1 /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 21DC8374300BD16B0080E3D1 /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2177B904300761A500670FAD /* Project object */;
 }
