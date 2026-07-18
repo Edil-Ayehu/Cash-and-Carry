@@ -18,6 +18,13 @@ struct RegisterView: View {
     @EnvironmentObject var router: AppRouter
     
     @StateObject private var registerVM = DIContainer.shared.makeRegisterViewModel()
+    
+    private var isFormValid: Bool {
+        !fullName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+        !phone.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+        !password.isEmpty &&
+        !confirmPassword.isEmpty
+    }
 
     var body: some View {
 
@@ -75,6 +82,7 @@ struct RegisterView: View {
                     PrimaryButton(
                         title: "Create Account",
                         isLoading: registerVM.isLoading,
+                        isEnabled: isFormValid,
                         action: _handleRegister
                     )
 
@@ -126,11 +134,64 @@ struct RegisterView: View {
         }
     }
     
+//    func _handleRegister() {
+//        Task {
+//            await registerVM.register(
+//                name: fullName,
+//                phone: phone,
+//                email: email,
+//                password: password
+//            )
+//        }
+//    }
     func _handleRegister() {
+
+        let trimmedName = fullName.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedPhone = phone.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        guard !trimmedName.isEmpty else {
+            registerVM.errorMessage = "Please enter your full name."
+            return
+        }
+
+        guard !trimmedPhone.isEmpty else {
+            registerVM.errorMessage = "Please enter your phone number."
+            return
+        }
+        
+        if !trimmedEmail.isEmpty {
+                guard trimmedEmail.contains("@"),
+                      trimmedEmail.contains(".") else {
+                    registerVM.errorMessage = "Please enter a valid email address."
+                    return
+                }
+        }
+
+        guard !password.isEmpty else {
+            registerVM.errorMessage = "Please enter your password."
+            return
+        }
+        
+        guard password.count >= 6 else {
+                registerVM.errorMessage = "Password must be at least 6 characters long."
+                return
+            }
+
+        guard !confirmPassword.isEmpty else {
+            registerVM.errorMessage = "Please confirm your password."
+            return
+        }
+
+        guard password == confirmPassword else {
+            registerVM.errorMessage = "Passwords do not match."
+            return
+        }
+
         Task {
             await registerVM.register(
-                name: fullName,
-                phone: phone,
+                name: trimmedName,
+                phone: trimmedPhone,
                 email: email,
                 password: password
             )
