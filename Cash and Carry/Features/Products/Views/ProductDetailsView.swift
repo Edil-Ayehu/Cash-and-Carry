@@ -21,10 +21,7 @@ struct ProductDetailsView: View {
             
             Spacer().frame(height: 12)
             
-            Image(product.image)
-                .resizable()
-                .scaledToFit()
-                .frame(maxWidth: .infinity)
+            productImage
 
 
             productDetails
@@ -66,15 +63,13 @@ private extension ProductDetailsView {
         
         VStack(alignment: .leading, spacing: 24) {
 
-
-
             VStack(alignment: .leading, spacing: 8) {
 
                 Text(product.name)
                     .font(.custom("Outfit-SemiBold", size: 16))
                     .foregroundColor(.black)
 
-                Text("Premium refined sunflower cooking oil")
+                Text(product.description)
                     .font(.custom("Outfit-Regular", size: 14))
                     .foregroundColor(.black.opacity(0.85))
             }
@@ -88,5 +83,49 @@ private extension ProductDetailsView {
         }
         .padding(.horizontal)
         .padding(.top, 24)
+    }
+    
+    
+    @ViewBuilder
+    var productImage: some View {
+
+        if let url = URL(string: product.image), !product.image.isEmpty {
+
+            AsyncImage(url: url) { phase in
+
+                switch phase {
+
+                case .empty:
+                    ProgressView()
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 280)
+
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 280)
+
+                case .failure(_):
+                    placeholderImage
+
+                @unknown default:
+                    placeholderImage
+                }
+            }
+
+        } else {
+            placeholderImage
+        }
+    }
+
+    var placeholderImage: some View {
+        Image(systemName: "photo")
+            .font(.system(size: 60))
+            .foregroundColor(.gray.opacity(0.6))
+            .frame(maxWidth: .infinity)
+            .frame(height: 280)
+            .background(Color.gray.opacity(0.08))
     }
 }
