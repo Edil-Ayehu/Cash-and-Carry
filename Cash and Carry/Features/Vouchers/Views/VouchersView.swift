@@ -10,18 +10,6 @@ import SwiftUI
 struct VouchersView: View {
 
     @State private var selectedTab = 0
-
-//    private let vouchers = [
-//        Voucher(code: "RTODRDM3CX", productCount: 3, isRedeemed: false),
-//        Voucher(code: "NQ_9FBXUTV", productCount: 3, isRedeemed: false),
-//        Voucher(code: "ABC123XYZ", productCount: 2, isRedeemed: true)
-//    ]
-//
-//    var filteredVouchers: [Voucher] {
-//        vouchers.filter {
-//            selectedTab == 0 ? !$0.isRedeemed : $0.isRedeemed
-//        }
-//    }
     
     @EnvironmentObject var myVoucherVM: MyVoucherViewModel
     
@@ -62,10 +50,30 @@ struct VouchersView: View {
                 }
 
                 LazyVStack(spacing: 20) {
+                    if myVoucherVM.isLoading {
+                        ForEach(0..<8) { _ in
+                            VoucherCardSkeleton()
+                        }
+                    } else if displayedVouchers.isEmpty {
+                        VStack(spacing: 12) {
+                                Image(systemName: "tray")
+                                    .font(.system(size: 40))
+                                    .foregroundColor(.gray)
 
-                    ForEach(displayedVouchers) { voucher in
-                        VoucherCard(voucher: voucher)
+                                Text(selectedTab == 0 ? "No pending vouchers" : "No completed vouchers")
+                                    .foregroundColor(.gray)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.top, 60)
                     }
+                    else {
+                        ForEach(displayedVouchers) { voucher in
+                            VoucherCard(voucher: voucher)
+                        }
+                        
+                    }
+
+                    
                 }
             }
             .padding()
