@@ -8,6 +8,7 @@
 import Foundation
 
 final class EventRepositoryImpl: EventRepository {
+    
     private var eventService: EventService
     
     init(eventService: EventService) {
