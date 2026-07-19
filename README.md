@@ -319,7 +319,7 @@ Mobile Application Developer
 - React Native
 
 GitHub:
-https://github.com/yourusername
+https://github.com/Edil-Ayehu
 
 ---
 
