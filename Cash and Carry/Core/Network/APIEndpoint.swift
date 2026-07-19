@@ -21,4 +21,7 @@ enum APIEndpoints {
     
     // MARK: Events
     static let events = "\(baseURL)/events/active"
+    
+    // MARK: Vouchers
+    static let myVouchers = "\(baseURL)/vouchers/my-vouchers"
 }

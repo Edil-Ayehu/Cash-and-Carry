@@ -11,17 +11,19 @@ struct VouchersView: View {
 
     @State private var selectedTab = 0
 
-    private let vouchers = [
-        Voucher(code: "RTODRDM3CX", productCount: 3, isRedeemed: false),
-        Voucher(code: "NQ_9FBXUTV", productCount: 3, isRedeemed: false),
-        Voucher(code: "ABC123XYZ", productCount: 2, isRedeemed: true)
-    ]
-
-    var filteredVouchers: [Voucher] {
-        vouchers.filter {
-            selectedTab == 0 ? !$0.isRedeemed : $0.isRedeemed
-        }
-    }
+//    private let vouchers = [
+//        Voucher(code: "RTODRDM3CX", productCount: 3, isRedeemed: false),
+//        Voucher(code: "NQ_9FBXUTV", productCount: 3, isRedeemed: false),
+//        Voucher(code: "ABC123XYZ", productCount: 2, isRedeemed: true)
+//    ]
+//
+//    var filteredVouchers: [Voucher] {
+//        vouchers.filter {
+//            selectedTab == 0 ? !$0.isRedeemed : $0.isRedeemed
+//        }
+//    }
+    
+    @EnvironmentObject var myVoucherVM: MyVoucherViewModel
 
     var body: some View {
 
@@ -42,14 +44,14 @@ struct VouchersView: View {
 
                     Spacer()
 
-                    Text("\(filteredVouchers.count)")
+                    Text("\(myVoucherVM.vouchers.count)")
                         .font(.custom("Outfit-Medium", size: 16))
                         .foregroundColor(.gray)
                 }
 
                 LazyVStack(spacing: 20) {
 
-                    ForEach(filteredVouchers) { voucher in
+                    ForEach(myVoucherVM.vouchers) { voucher in
                         VoucherCard(voucher: voucher)
                     }
                 }

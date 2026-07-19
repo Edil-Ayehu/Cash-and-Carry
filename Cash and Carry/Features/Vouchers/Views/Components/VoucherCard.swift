@@ -9,7 +9,7 @@ import SwiftUI
 
 struct VoucherCard: View {
 
-    let voucher: Voucher
+    let voucher: MyVoucherResponse
 
     var body: some View {
 
@@ -29,7 +29,7 @@ struct VoucherCard: View {
                         .foregroundColor(.white)
                 }
 
-                Text("\(voucher.productCount) Products")
+                Text("\(voucher.items.count) Products")
                     .font(.custom("Outfit-SemiBold", size: 16))
                     .foregroundColor(.white)
 

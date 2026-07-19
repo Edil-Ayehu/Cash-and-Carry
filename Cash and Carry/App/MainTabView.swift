@@ -12,6 +12,8 @@ struct MainTabView: View {
     @State private var selectedTab: Tab = .home
     
     @StateObject private var productVM = DIContainer.shared.makeProductViewModel()
+    
+    @StateObject private var myVoucherVM = DIContainer.shared.makeMyVoucherViewModel()
 
     var body: some View {
 
@@ -36,6 +38,7 @@ struct MainTabView: View {
                     Label(Tab.vouchers.title, systemImage: Tab.vouchers.icon)
                 }
                 .tag(Tab.vouchers)
+                .environmentObject(myVoucherVM)
 
             CartView(selectedTab: $selectedTab)
                 .tabItem {
@@ -53,6 +56,7 @@ struct MainTabView: View {
         .tint(.black) // Selected tab color
         .task {
             await productVM.fetchProducts(category: "")
+            await myVoucherVM.fetchMyVouchers()
         }
     }
 }

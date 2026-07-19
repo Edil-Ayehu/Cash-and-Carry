@@ -39,6 +39,10 @@ final class DIContainer {
         EventRepositoryImpl(eventService: eventService)
     } ()
     
+    lazy var myVoucherRepository: MyVoucherRepository = {
+        MyVoucherRepositoryImpl(myVoucherService: myVoucherService)
+    } ()
+    
     // MARK: Services
     
     lazy var apiClient: APIClient = {
@@ -55,6 +59,10 @@ final class DIContainer {
     
     lazy var eventService: EventService = {
         EventServiceImpl(apiClient: apiClient)
+    } ()
+    
+    lazy var myVoucherService: MyVoucherService = {
+        MyVoucherServiceImpl(apiClient: apiClient)
     } ()
     
     
@@ -86,5 +94,9 @@ final class DIContainer {
     
     func makeEventViewModel() -> EventViewModel {
         EventViewModel(eventRepository: eventRepository)
+    }
+    
+    func makeMyVoucherViewModel() -> MyVoucherViewModel {
+        MyVoucherViewModel(myVoucherRepository: myVoucherRepository)
     }
 }
