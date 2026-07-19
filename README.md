@@ -45,7 +45,6 @@ A modern iOS shopping application built with **SwiftUI**, following **MVVM + Rep
  | ![simulator_screenshot_C9782C55-FBA3-46AB-B080-5609DA9B30FA](https://github.com/user-attachments/assets/22247aee-f766-4493-9928-c20d214be1a6)
  | ![simulator_screenshot_034B13A0-5CBA-4837-B01D-DFF034D74242](https://github.com/user-attachments/assets/e23157e9-036e-4d27-9739-552fa8fca363)
  |
-|-------|------|----------|---------|
 | Screenshot | Screenshot | Screenshot | Screenshot |
 
 ---
