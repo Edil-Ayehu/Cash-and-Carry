@@ -7,6 +7,8 @@
 import SwiftUI
 
 struct EventsSection: View {
+    
+    @StateObject private var eventVM = DIContainer.shared.makeEventViewModel()
 
     var body: some View {
 
@@ -31,10 +33,15 @@ struct EventsSection: View {
             ScrollView(.horizontal, showsIndicators: false) {
 
                 HStack(spacing: 18) {
-
-                    ForEach(0..<5) { _ in
-                        EventCard()
+                    if eventVM.isLoading {
+                        ProgressView()
+                    } else {
+                        ForEach(eventVM.events) { event in
+                            EventCard(event: event)
+                        }
                     }
+
+                    
 
                 }
                 .padding(.bottom, 4)
@@ -43,6 +50,9 @@ struct EventsSection: View {
 
         }
         .padding(.horizontal, 20)
+        .task {
+            await eventVM.fetchEvents()
+        }
 
     }
 

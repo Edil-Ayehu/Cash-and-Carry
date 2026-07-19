@@ -7,6 +7,8 @@
 import SwiftUI
 
 struct EventCard: View {
+    
+    let event: EventResponseModel
 
     var body: some View {
 
@@ -22,14 +24,14 @@ struct EventCard: View {
 
             VStack(alignment: .leading, spacing: 10) {
 
-                Text("Wedding Event")
+                Text(event.eventType)
                     .font(.custom("Outfit-Medium", size: 14))
                     .foregroundColor(.cyan)
 
-                Text("Grand Wedding Banquet")
+                Text(event.title)
                     .font(.custom("Outfit-Medium", size: 16))
 
-                Label("Sep 17, 2026", systemImage: "calendar")
+                Label(event.startDate, systemImage: "calendar")
                     .font(.custom("Outfit-Regular", size: 14))
 
                 Label("Sep 25, 2026", systemImage: "flag")

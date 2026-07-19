@@ -35,6 +35,10 @@ final class DIContainer {
         ProductRepositoryImpl(productService: productService)
     } ()
     
+    lazy var eventRepository: EventRepository = {
+        EventRepositoryImpl(eventService: eventService)
+    } ()
+    
     // MARK: Services
     
     lazy var apiClient: APIClient = {
@@ -47,6 +51,10 @@ final class DIContainer {
     
     lazy var productService: ProductService = {
         ProductServiceImpl(apiClient: apiClient)
+    } ()
+    
+    lazy var eventService: EventService = {
+        EventServiceImpl(apiClient: apiClient)
     } ()
     
     
@@ -74,5 +82,9 @@ final class DIContainer {
     
     func makeProductViewModel() -> ProductViewModel {
         ProductViewModel(productRepository: productRepository)
+    }
+    
+    func makeEventViewModel() -> EventViewModel {
+        EventViewModel(eventRepository: eventRepository)
     }
 }
