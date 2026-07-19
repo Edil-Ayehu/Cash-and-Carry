@@ -8,12 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
-
-    let columns = [
-        GridItem(.flexible()),
-        GridItem(.flexible())
-    ]
-
+    
+    @Binding var selectedTab: Tab
+    
     var body: some View {
 
         ScrollView(showsIndicators: false) {
@@ -26,10 +23,7 @@ struct HomeView: View {
                 
                 Spacer().frame(height: 18)
 
-                ProductsSection(
-                    columns: columns,
-                    products: Product.dummyProducts
-                )
+                ProductsSection(selectedTab: $selectedTab)
 
             }
             .padding(.bottom, 30)

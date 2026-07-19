@@ -24,6 +24,8 @@ struct ProductsView: View {
     ]
     
     @EnvironmentObject private var router: AppRouter
+    
+    @EnvironmentObject private var productVM: ProductViewModel
 
     var body: some View {
 
@@ -38,17 +40,27 @@ struct ProductsView: View {
                 searchBar
 
                 categorySection
-
+                
                 LazyVGrid(columns: columns, spacing: 20) {
+                    
+                    if productVM.isLoading {
+                        ForEach(0..<8) { _ in
+                            ProductCardSkeleton()
+                        }
+                    } else {
+                        ForEach(productVM.products) { product in
 
-                    ForEach(Product.dummyProducts) { product in
-
-                        ProductCard(product: product)
-                            .onTapGesture {
-                                router.push(.productDetails(product))
-                            }
+                            ProductCard(product: product)
+                                .onTapGesture {
+                                    router.push(.productDetails(product))
+                                }
+                        }
                     }
+
+                    
                 }
+
+                
             }
             .padding()
         }

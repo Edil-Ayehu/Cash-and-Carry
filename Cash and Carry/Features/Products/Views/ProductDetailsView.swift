@@ -11,7 +11,7 @@ struct ProductDetailsView: View {
 
     @Environment(\.dismiss) private var dismiss
 
-    let product: Product
+    let product: ProductResponse
 
     var body: some View {
 

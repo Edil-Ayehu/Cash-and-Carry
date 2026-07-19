@@ -7,11 +7,17 @@
 import SwiftUI
 
 struct ProductsSection: View {
-
-    let columns: [GridItem]
-    let products: [Product]
+    
+    @Binding var selectedTab: Tab
     
     @EnvironmentObject var router: AppRouter
+    
+    @EnvironmentObject var productVM: ProductViewModel
+    
+    let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
 
     var body: some View {
 
@@ -24,22 +30,32 @@ struct ProductsSection: View {
 
                 Spacer()
                 
-                Button{} label: {
+                Button{
+                    selectedTab = .products
+                } label: {
                     Text("See All")
                         .font(.custom("Outfit-Medium", size: 14))
                         .foregroundColor(.cyan)
                 }
 
             }
+            
+            
 
             LazyVGrid(columns: columns, spacing: 18) {
-
-                ForEach(products) { product in
-                    ProductCard(product: product)
-                        .onTapGesture {
-                            router.push(.productDetails(product))
-                        }
+                if productVM.isLoading {
+                    ForEach(0..<4) {_ in
+                        ProductCardSkeleton()
+                    }
+                } else {
+                    ForEach(productVM.products.prefix(4)) { product in
+                        ProductCard(product: product)
+                            .onTapGesture {
+                                router.push(.productDetails(product))
+                            }
+                    }
                 }
+
 
             }
 

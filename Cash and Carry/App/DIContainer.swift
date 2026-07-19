@@ -31,6 +31,10 @@ final class DIContainer {
         )
     } ()
     
+    lazy var productRepository: ProductRepository = {
+        ProductRepositoryImpl(productService: productService)
+    } ()
+    
     // MARK: Services
     
     lazy var apiClient: APIClient = {
@@ -39,6 +43,10 @@ final class DIContainer {
     
     lazy var authService: AuthService = {
         AuthServiceImpl(apiClient: apiClient)
+    } ()
+    
+    lazy var productService: ProductService = {
+        ProductServiceImpl(apiClient: apiClient)
     } ()
     
     
@@ -62,5 +70,9 @@ final class DIContainer {
     
     func makeLogoutViewModel() -> LogoutViewModel {
         LogoutViewModel(authRepository: authRepository)
+    }
+    
+    func makeProductViewModel() -> ProductViewModel {
+        ProductViewModel(productRepository: productRepository)
     }
 }
