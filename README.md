@@ -39,11 +39,11 @@ A modern iOS shopping application built with **SwiftUI**, following **MVVM + Rep
 ---
 
 # Screenshots
-![simulator_screenshot_54B5A80F-1E90-406A-8440-A2ADA3A8E835](https://github.com/user-attachments/assets/e355437a-add1-4871-8c87-a6b941ef2359)
+
 
 > Add screenshots here after uploading them.
 
-| Login | Home | Products | Details |
+| ![simulator_screenshot_54B5A80F-1E90-406A-8440-A2ADA3A8E835](https://github.com/user-attachments/assets/e355437a-add1-4871-8c87-a6b941ef2359) | ![simulator_screenshot_54B5A80F-1E90-406A-8440-A2ADA3A8E835](https://github.com/user-attachments/assets/e355437a-add1-4871-8c87-a6b941ef2359) | ![simulator_screenshot_54B5A80F-1E90-406A-8440-A2ADA3A8E835](https://github.com/user-attachments/assets/e355437a-add1-4871-8c87-a6b941ef2359) | ![simulator_screenshot_54B5A80F-1E90-406A-8440-A2ADA3A8E835](https://github.com/user-attachments/assets/e355437a-add1-4871-8c87-a6b941ef2359) |
 |-------|------|----------|---------|
 | Screenshot | Screenshot | Screenshot | Screenshot |
 
