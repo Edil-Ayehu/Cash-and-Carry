@@ -40,7 +40,8 @@ A modern iOS shopping application built with **SwiftUI**, following **MVVM + Rep
 
 # Screenshots
 
-| ![simulator_screenshot_54B5A80F-1E90-406A-8440-A2ADA3A8E835](https://github.com/user-attachments/assets/e355437a-add1-4871-8c87-a6b941ef2359) | ![simulator_screenshot_AA8C1B8C-0B90-44EE-A2CD-465797C2596B](https://github.com/user-attachments/assets/b1b45cda-ace7-414b-806b-7ceaaf757826) | <img width="589" height="1280" alt="photo_2026-07-19 16 50 16" src="https://github.com/user-attachments/assets/850f63cb-d306-4697-a4a2-30429ca385b2" /> | ![simulator_screenshot_54B5A80F-1E90-406A-8440-A2ADA3A8E835](https://github.com/user-attachments/assets/e355437a-add1-4871-8c87-a6b941ef2359) |
+| ![simulator_screenshot_54B5A80F-1E90-406A-8440-A2ADA3A8E835](https://github.com/user-attachments/assets/e355437a-add1-4871-8c87-a6b941ef2359) | ![simulator_screenshot_AA8C1B8C-0B90-44EE-A2CD-465797C2596B](https://github.com/user-attachments/assets/b1b45cda-ace7-414b-806b-7ceaaf757826) | ![simulator_screenshot_992230D7-44C3-47B0-9185-A41764EAD11E](https://github.com/user-attachments/assets/7e500fa8-074b-4033-ba9a-131e0ab9dd32)
+ | ![simulator_screenshot_54B5A80F-1E90-406A-8440-A2ADA3A8E835](https://github.com/user-attachments/assets/e355437a-add1-4871-8c87-a6b941ef2359) |
 |-------|------|----------|---------|
 | Screenshot | Screenshot | Screenshot | Screenshot |
 
@@ -325,4 +326,4 @@ https://github.com/yourusername
 
 # License
 
-This project is intended for educational and portfolio purposes.![simulator_screenshot_4B648628-37EF-4E62-854E-93B46571B99E](https://github.com/user-attachments/assets/af48bb0b-96cf-40ce-affc-15327b0d3a69)
+This project is intended for educational and portfolio purposes.
