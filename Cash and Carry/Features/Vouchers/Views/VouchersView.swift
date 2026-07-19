@@ -24,6 +24,18 @@ struct VouchersView: View {
 //    }
     
     @EnvironmentObject var myVoucherVM: MyVoucherViewModel
+    
+    private var pendingVouchers: [MyVoucherResponse] {
+        myVoucherVM.vouchers.filter { $0.status == "PENDING" }
+    }
+    
+    private var completedVouchers: [MyVoucherResponse] {
+        myVoucherVM.vouchers.filter { $0.status == "COMPLETED" }
+    }
+    
+    private var displayedVouchers: [MyVoucherResponse] {
+        selectedTab == 0 ? pendingVouchers : completedVouchers
+    }
 
     var body: some View {
 
@@ -44,14 +56,14 @@ struct VouchersView: View {
 
                     Spacer()
 
-                    Text("\(myVoucherVM.vouchers.count)")
+                    Text("\(displayedVouchers.count)")
                         .font(.custom("Outfit-Medium", size: 16))
                         .foregroundColor(.gray)
                 }
 
                 LazyVStack(spacing: 20) {
 
-                    ForEach(myVoucherVM.vouchers) { voucher in
+                    ForEach(displayedVouchers) { voucher in
                         VoucherCard(voucher: voucher)
                     }
                 }
