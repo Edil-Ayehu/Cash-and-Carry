@@ -55,16 +55,10 @@ struct VouchersView: View {
                             VoucherCardSkeleton()
                         }
                     } else if displayedVouchers.isEmpty {
-                        VStack(spacing: 12) {
-                                Image(systemName: "tray")
-                                    .font(.system(size: 40))
-                                    .foregroundColor(.gray)
-
-                                Text(selectedTab == 0 ? "No pending vouchers" : "No completed vouchers")
-                                    .foregroundColor(.gray)
-                            }
-                            .frame(maxWidth: .infinity)
-                            .padding(.top, 60)
+                        EmptyVoucherView(
+                            title: selectedTab == 0 ? "No Pending Vouchers" : "No Redeemed Vouchers",
+                            subtitle: selectedTab == 0 ? "You don't have any pending vouchers yet." : "Your redeemed vouchers will appear here."
+                        )
                     }
                     else {
                         ForEach(displayedVouchers) { voucher in
