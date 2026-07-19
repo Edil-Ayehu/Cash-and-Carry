@@ -40,7 +40,7 @@ A modern iOS shopping application built with **SwiftUI**, following **MVVM + Rep
 
 # Screenshots
 
-| Login | Home | Products | Product Details |
+| Login | Home | Register | Voucher |
 |:------:|:----:|:--------:|:---------------:|
 | ![Login](https://github.com/user-attachments/assets/3a6b2cbd-bd49-4bda-964d-a0d68309818f) | ![Home](https://github.com/user-attachments/assets/d88785b8-e74f-49d9-b9fb-42f9226372fe) | ![Products](https://github.com/user-attachments/assets/22247aee-f766-4493-9928-c20d214be1a6) | ![Details](https://github.com/user-attachments/assets/e23157e9-036e-4d27-9739-552fa8fca363) |
 
