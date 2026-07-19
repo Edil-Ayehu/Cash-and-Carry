@@ -34,7 +34,9 @@ struct EventsSection: View {
 
                 HStack(spacing: 18) {
                     if eventVM.isLoading {
-                        ProgressView()
+                        ForEach(0..<4) { _ in
+                            EventCardSkeleton()
+                        }
                     } else {
                         ForEach(eventVM.events) { event in
                             EventCard(event: event)
