@@ -48,23 +48,30 @@ struct ProductsView: View {
 
                 categorySection
                 
-                LazyVGrid(columns: columns, spacing: 20) {
-                    
-                    if productVM.isLoading {
+                if productVM.isLoading {
+                    LazyVGrid(columns: columns, spacing: 20) {
                         ForEach(0..<8) { _ in
                             ProductCardSkeleton()
                         }
+                    }
+                } else {
+                    if (productVM.products.isEmpty) {
+                        ProductsEmptyStateView(
+                                title: "No Products Found",
+                                message: "Try searching with a different keyword or select another category."
+                            )
+                        .frame(maxWidth: .infinity)
                     } else {
-                        ForEach(productVM.products) { product in
+                        LazyVGrid(columns: columns, spacing: 20) {
+                            ForEach(productVM.products) { product in
 
-                            ProductCard(product: product)
-                                .onTapGesture {
-                                    router.push(.productDetails(product))
-                                }
+                                ProductCard(product: product)
+                                    .onTapGesture {
+                                        router.push(.productDetails(product))
+                                    }
+                            }
                         }
                     }
-
-                    
                 }
 
                 
