@@ -12,6 +12,7 @@ final class MyVoucherViewModel: ObservableObject {
     @Published var vouchers: [MyVoucherResponse] = []
     
     @Published var isLoading: Bool = false
+    @Published var isRefreshing: Bool = false
     @Published var errorMessage: String?
     
     private var myVoucherRepository: MyVoucherRepository
@@ -20,12 +21,19 @@ final class MyVoucherViewModel: ObservableObject {
         self.myVoucherRepository = myVoucherRepository
     }
     
-    func fetchMyVouchers() async {
-        isLoading = true
+    func fetchMyVouchers(refresh: Bool = false) async {
+        if refresh {
+            isRefreshing = true
+        } else {
+            isLoading = true
+        }
         errorMessage = nil
         
         defer {
-            isLoading = false
+                isRefreshing = false
+            
+                isLoading = false
+            
         }
         
         do {
@@ -35,7 +43,11 @@ final class MyVoucherViewModel: ObservableObject {
             if let apiError = error as? APIError {
                     errorMessage = apiError.localizedDescription
               } else {
-                   errorMessage = error.localizedDescription
+                  if let apiError = error as? APIError {
+                              errorMessage = apiError.localizedDescription
+                          } else {
+                              errorMessage = error.localizedDescription
+                          }
              }
         }
     }

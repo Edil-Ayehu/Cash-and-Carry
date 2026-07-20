@@ -27,8 +27,6 @@ struct VouchersView: View {
 
     var body: some View {
 
-        ScrollView(showsIndicators: false) {
-
             VStack(alignment: .leading, spacing: 24) {
 
                 Text("My Orders")
@@ -48,31 +46,41 @@ struct VouchersView: View {
                         .font(.custom("Outfit-Medium", size: 16))
                         .foregroundColor(.gray)
                 }
-
-                LazyVStack(spacing: 20) {
-                    if myVoucherVM.isLoading {
-                        ForEach(0..<8) { _ in
-                            VoucherCardSkeleton()
+                if myVoucherVM.isLoading {
+                    ScrollView(showsIndicators: false) {
+                        LazyVStack (spacing: 20) {
+                            ForEach(0..<5, id: \.self) { _ in
+                                VoucherCardSkeleton()
+                            }
                         }
-                    } else if displayedVouchers.isEmpty {
-                        EmptyVoucherView(
-                            title: selectedTab == 0 ? "No Pending Vouchers" : "No Redeemed Vouchers",
-                            subtitle: selectedTab == 0 ? "You don't have any pending vouchers yet." : "Your redeemed vouchers will appear here."
-                        )
                     }
-                    else {
-                        ForEach(displayedVouchers) { voucher in
-                            VoucherCard(voucher: voucher)
-                        }
-                        
-                    }
-
                     
+                } else {
+                    ScrollView(showsIndicators: false) {
+                        if displayedVouchers.isEmpty {
+                            EmptyVoucherView(
+                                title: selectedTab == 0 ? "No Pending Vouchers" : "No Redeemed Vouchers",
+                                subtitle: selectedTab == 0 ? "You don't have any pending vouchers yet." : "Your redeemed vouchers will appear here."
+                            )
+                        } else {
+                            LazyVStack(spacing: 20) {
+                                ForEach(displayedVouchers) { voucher in
+                                    VoucherCard(voucher: voucher)
+                                }
+                                
+                            }
+                        }
+                    }
+                    .refreshable {
+                        await myVoucherVM.fetchMyVouchers()
+                    }
                 }
+
+                
+                
             }
             .padding()
-        }
-        .background(Color(.systemGray6).opacity(0.15))
+            .background(Color(.systemGray6).opacity(0.15))
     }
 
     private var picker: some View {
