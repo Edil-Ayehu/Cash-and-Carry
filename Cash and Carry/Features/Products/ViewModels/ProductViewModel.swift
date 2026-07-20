@@ -22,7 +22,8 @@ final class ProductViewModel: ObservableObject {
     }
     
     func fetchProducts(
-        category: String?
+        category: String?,
+        search: String?
     ) async {
        isLoading = true
         
@@ -32,7 +33,8 @@ final class ProductViewModel: ObservableObject {
         
         do {
             let products = try await productRepository.fetchProducts(
-                category: category
+                category: category,
+                search: search
             )
             
             self.products = products

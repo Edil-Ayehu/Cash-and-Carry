@@ -15,10 +15,12 @@ final class ProductRepositoryImpl: ProductRepository {
     }
     
     func fetchProducts(
-        category: String?
+        category: String?,
+        search: String?
     ) async throws -> [ProductResponse] {
         try await productService.fetchProducts(
-            category: category
+            category: category,
+            search: search
         )
     }
     

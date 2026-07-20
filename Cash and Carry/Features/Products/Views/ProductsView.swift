@@ -23,6 +23,8 @@ struct ProductsView: View {
     
     @StateObject private var categoryVM = DIContainer.shared.makeCategoryViewModel()
     
+    @State private var searchTask: Task<Void, Never>?
+    
     private var categories: [CategoryResponse] {
         let all = CategoryResponse(
             id: "",
@@ -73,6 +75,22 @@ struct ProductsView: View {
         .task {
             await categoryVM.fetchCategories()
         }
+        .onChange(of: searchText) {_, newValue in
+            searchTask?.cancel()
+
+                searchTask = Task {
+                    try? await Task.sleep(for: .milliseconds(500))
+
+                    guard !Task.isCancelled else { return }
+
+                    await productVM.fetchProducts(
+                        category: selectedCategory == "All" ? nil : selectedCategory,
+                        search: newValue.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                            ? nil
+                            : newValue.trimmingCharacters(in: .whitespacesAndNewlines)
+                    )
+                }
+        }
     }
 }
 
@@ -121,7 +139,7 @@ private extension ProductsView {
                             selectedCategory = category.name
                             
                             Task {
-                                await productVM.fetchProducts(category: selectedCategory == "All" ? nil: category.name)
+                                await productVM.fetchProducts(category: selectedCategory == "All" ? nil: category.name, search: nil)
                             }
 
                         } label: {

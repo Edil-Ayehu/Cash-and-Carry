@@ -58,7 +58,7 @@ struct MainTabView: View {
         }
         .tint(.black) // Selected tab color
         .task {
-            await productVM.fetchProducts(category: "")
+            await productVM.fetchProducts(category: nil, search: nil)
             await myVoucherVM.fetchMyVouchers()
             await profileVM.getProfile()
         }

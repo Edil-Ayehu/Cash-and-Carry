@@ -16,7 +16,8 @@ final class ProductServiceImpl: ProductService {
     }
     
     func fetchProducts(
-        category: String?
+        category: String?,
+        search: String?
     ) async throws -> [ProductResponse] {
         
         var endpoint = "\(APIEndpoints.products)?catalog=true"
@@ -24,6 +25,11 @@ final class ProductServiceImpl: ProductService {
         if let category,
             !category.isEmpty {
             endpoint += "&category=\(category)"
+        }
+        
+        if let search,
+           !search.isEmpty {
+            endpoint += "&search=\(search)"
         }
         
         return try await apiClient.request(

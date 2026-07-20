@@ -9,7 +9,8 @@ import Foundation
 
 protocol ProductService {
     func fetchProducts(
-        category: String?
+        category: String?,
+        search: String?
     ) async throws -> [ProductResponse]
     
     func fetchCategories() async throws -> [CategoryResponse]
