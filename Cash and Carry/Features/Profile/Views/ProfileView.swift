@@ -91,7 +91,7 @@ private extension ProfileView {
     var profileHeader: some View {
         VStack {
             if profileVM.isLoading {
-                Text("Loading...")
+                ProgressView()
             } else if let profile = profileVM.profile {
                 VStack(spacing: 8) {
 
@@ -101,7 +101,7 @@ private extension ProfileView {
                             .fill(Color.black)
                             .frame(width: 80, height: 80)
 
-                       Text("ET")
+                      Text(profileInitials(profile.name))
                             .font(.custom("Outfit-SemiBold", size: 26))
                             .foregroundColor(.white)
                             }
@@ -110,23 +110,25 @@ private extension ProfileView {
                                 .font(.custom("Outfit-SemiBold", size: 18))
                     
                     
-
-                    Text(profile.email)
-                                .font(.custom("Outfit-Regular", size: 14))
-                                .foregroundColor(.gray)
+                    if let email = profile.email, !email.isEmpty {
+                        Text(email)
+                                    .font(.custom("Outfit-Regular", size: 14))
+                                    .foregroundColor(.gray)
+                    }
+                    
 
                             HStack(spacing: 10) {
 
                                 Image(systemName: "checkmark.circle.fill")
                                     .foregroundColor(.green)
 
-                                Text("Active Customer")
+                                Text(profile.isActive ? "Active Customer" : "Inactive Customer")
                                     .font(.custom("Outfit-Medium", size: 14))
-                                    .foregroundColor(.green)
+                                    .foregroundColor(profile.isActive ? .green: .orange)
                             }
                             .padding(.horizontal, 24)
                             .frame(height: 46)
-                            .background(Color.green.opacity(0.1))
+                            .background(profile.isActive ? Color.green.opacity(0.1) : .orange.opacity(0.1))
                             .clipShape(Capsule())
                         }
             }
@@ -136,24 +138,32 @@ private extension ProfileView {
     }
     
     var accountInformation: some View {
-        VStack(alignment: .leading, spacing: 24) {
+        VStack {
+            if profileVM.isLoading {
+                ProgressView()
+            } else if let profile = profileVM.profile {
+                VStack(alignment: .leading, spacing: 24) {
 
-                    Text("Account Information")
-                        .font(.custom("Outfit-Medium", size: 16))
+                            Text("Account Information")
+                                .font(.custom("Outfit-Medium", size: 16))
 
-                    ProfileInfoRow(
-                        icon: "phone",
-                        title: "Phone Number",
-                        value: "+27930884402"
-                    )
+                            ProfileInfoRow(
+                                icon: "phone",
+                                title: "Phone Number",
+                                value: profile.phone
+                            )
 
-                    ProfileInfoRow(
-                        icon: "calendar",
-                        title: "Member Since",
-                        value: "Jun 10, 2026"
-                    )
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                            ProfileInfoRow(
+                                icon: "calendar",
+                                title: "Member Since",
+                                value: profile.createdAt.formattedDate()
+                            )
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            
+        }
+        
     }
     
     var preferences: some View {
@@ -184,5 +194,20 @@ private extension ProfileView {
                        showLogoutAlert = true
                     }
                 }
+    }
+    
+    private func profileInitials(_ name: String) -> String {
+        let components = name
+            .split(separator: " ")
+            .map { String($0) }
+
+        if components.count >= 2 {
+            return "\(components[0].prefix(1))\(components[1].prefix(1))"
+                .uppercased()
+        } else if let first = components.first {
+            return String(first.prefix(2)).uppercased()
+        }
+
+        return ""
     }
 }
