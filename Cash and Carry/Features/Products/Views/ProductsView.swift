@@ -113,8 +113,16 @@ private extension ProductsView {
                     ForEach(categories) { category in
 
                         Button {
+                            
+                            guard selectedCategory != category.name else {
+                                return
+                            }
 
                             selectedCategory = category.name
+                            
+                            Task {
+                                await productVM.fetchProducts(category: selectedCategory == "All" ? nil: category.name)
+                            }
 
                         } label: {
 

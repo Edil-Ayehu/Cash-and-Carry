@@ -19,7 +19,7 @@ final class ProductServiceImpl: ProductService {
         category: String?
     ) async throws -> [ProductResponse] {
         
-        var endpoint = "\(APIEndpoints.products)?catalog=false"
+        var endpoint = "\(APIEndpoints.products)?catalog=true"
         
         if let category,
             !category.isEmpty {
