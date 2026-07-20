@@ -18,6 +18,7 @@ enum APIEndpoints {
     
     // MARK: Products
     static let products = "\(baseURL)/products"
+    static let categories = "\(baseURL)/categories"
     
     // MARK: Events
     static let events = "\(baseURL)/events/active"

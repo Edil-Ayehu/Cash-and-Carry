@@ -30,4 +30,10 @@ final class ProductServiceImpl: ProductService {
             endpoint: endpoint,
         )
     }
+    
+    func fetchCategories() async throws -> [CategoryResponse] {
+        try await apiClient.request(
+            endpoint: APIEndpoints.categories
+        )
+    }
 }

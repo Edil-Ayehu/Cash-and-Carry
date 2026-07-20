@@ -2,8 +2,8 @@ import SwiftUI
 
 struct LoginView: View {
 
-    @State private var phone = "930884402"
-    @State private var password = "654321"
+    @State private var phone = "930884422"
+    @State private var password = "123456"
     
     @EnvironmentObject private var router: AppRouter
     

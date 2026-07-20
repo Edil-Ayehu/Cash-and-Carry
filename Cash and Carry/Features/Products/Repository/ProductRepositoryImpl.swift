@@ -21,4 +21,8 @@ final class ProductRepositoryImpl: ProductRepository {
             category: category
         )
     }
+    
+    func fetchCategories() async throws -> [CategoryResponse] {
+        try await productService.fetchCategories()
+    }
 }

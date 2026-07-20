@@ -16,16 +16,21 @@ struct ProductsView: View {
         GridItem(.flexible(), spacing: 18),
         GridItem(.flexible(), spacing: 18)
     ]
-
-    let categories = [
-        "All",
-        "Soft Drinks",
-        "Energy drinks"
-    ]
     
     @EnvironmentObject private var router: AppRouter
     
     @EnvironmentObject private var productVM: ProductViewModel
+    
+    @StateObject private var categoryVM = DIContainer.shared.makeCategoryViewModel()
+    
+    private var categories: [CategoryResponse] {
+        let all = CategoryResponse(
+            id: "",
+            name: "All"
+        )
+        
+        return [all] + categoryVM.categories
+    }
 
     var body: some View {
 
@@ -65,6 +70,9 @@ struct ProductsView: View {
             .padding()
         }
         .background(Color.white)
+        .task {
+            await categoryVM.fetchCategories()
+        }
     }
 }
 
@@ -98,23 +106,23 @@ private extension ProductsView {
 
             HStack(spacing: 12) {
 
-                ForEach(categories, id: \.self) { category in
+                ForEach(categories) { category in
 
                     Button {
 
-                        selectedCategory = category
+                        selectedCategory = category.name
 
                     } label: {
 
-                        Text(category)
-                            .font(.custom(selectedCategory == category ? "Outfit-Medium": "Outfit-Regular", size: 14))
+                        Text(category.name)
+                            .font(.custom(selectedCategory == category.name ? "Outfit-Medium": "Outfit-Regular", size: 14))
                             .foregroundColor(
-                                selectedCategory == category ? .white : .black
+                                selectedCategory == category.name ? .white : .black
                             )
                             .padding(.horizontal, 24)
                             .frame(height: 50)
                             .background(
-                                selectedCategory == category
+                                selectedCategory == category.name
                                 ? Color.black
                                 : Color(.systemGray6)
                             )

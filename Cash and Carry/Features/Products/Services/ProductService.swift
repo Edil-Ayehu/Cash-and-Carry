@@ -11,4 +11,6 @@ protocol ProductService {
     func fetchProducts(
         category: String?
     ) async throws -> [ProductResponse]
+    
+    func fetchCategories() async throws -> [CategoryResponse]
 }

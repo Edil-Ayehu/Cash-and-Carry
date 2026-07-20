@@ -99,4 +99,8 @@ final class DIContainer {
     func makeMyVoucherViewModel() -> MyVoucherViewModel {
         MyVoucherViewModel(myVoucherRepository: myVoucherRepository)
     }
+    
+    func makeCategoryViewModel() -> CategoryViewModel {
+        CategoryViewModel(productRepository: productRepository)
+    }
 }
