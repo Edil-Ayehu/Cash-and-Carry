@@ -28,4 +28,5 @@ enum APIEndpoints {
     
     // MARK: Profile
     static let profile = "\(baseURL)/auth/me"
+    static let changePassword = "\(baseURL)/auth/change-password"
 }

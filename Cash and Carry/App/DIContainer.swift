@@ -115,4 +115,8 @@ final class DIContainer {
     func makeProfileViewModel() -> ProfileViewModel {
         ProfileViewModel(profileRepository: profileRepository)
     }
+    
+    func makeChangePasswordViewModel() -> ChangePasswordViewModel {
+        ChangePasswordViewModel(profileRepository: profileRepository)
+    }
 }

@@ -7,4 +7,9 @@
 
 protocol ProfileRepository {
     func getProfile() async throws -> ProfileResponse
+    
+    func changePassword(
+        oldPassword: String,
+        newPassword: String
+    ) async throws -> ChangePasswordResponse
 }

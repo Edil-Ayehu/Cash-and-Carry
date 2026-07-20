@@ -19,4 +19,14 @@ final class ProfileServiceImpl: ProfileService {
             endpoint: APIEndpoints.profile
         )
     }
+    
+    func changePassword(
+        request: ChangePasswordRequest
+    ) async throws -> ChangePasswordResponse {
+        try await apiClient.request(
+            endpoint: APIEndpoints.changePassword,
+            method: "POST",
+            body: request
+        )
+    }
 }

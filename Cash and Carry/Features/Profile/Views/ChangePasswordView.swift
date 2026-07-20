@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct ChangePasswordView: View {
 
@@ -16,6 +17,15 @@ struct ChangePasswordView: View {
     @State private var confirmPassword = ""
     
     @EnvironmentObject private var router: AppRouter
+    
+    @StateObject private var changePasswordVM = DIContainer.shared.makeChangePasswordViewModel()
+    
+    @State private var showSuccessToast: Bool = false
+    
+    private var isFormValid: Bool {
+        oldPassword.count >= 6 &&
+        newPassword.count >= 6
+    }
 
     var body: some View {
 
@@ -83,16 +93,64 @@ struct ChangePasswordView: View {
 
             PrimaryButton(
                 title: "Change Password",
-                action: {
-                    // Change password
-                    router.pop()
-                }
+                isLoading: changePasswordVM.isLoading,
+                isEnabled: isFormValid,
+                action: _handleChangePassword
                 
             )
             .padding()
         }
         .background(Color.white)
         .navigationBarBackButtonHidden()
+        .onChange(of: changePasswordVM.passwordChanged) {_, passwordChanged in
+            if passwordChanged {
+                showSuccessToast = true
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    router.pop()
+                }
+            }
+        }
+        .alert("Error", isPresented: Binding(
+            get: { changePasswordVM.errorMessage != nil},
+            set: { _ in changePasswordVM.errorMessage = nil}
+        )) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(changePasswordVM.errorMessage ?? "Something went wrong.")
+        }
+        
+        .toast(isPresenting: $showSuccessToast) {
+            AlertToast(
+                displayMode: .hud,
+                type: .complete(.green),
+                title: "Password changed successfully!"
+            )
+        }
+    }
+    
+    func _handleChangePassword() {
+        guard newPassword.count >= 6 else {
+            changePasswordVM.errorMessage = "Password must be at least 6 characters long."
+            return
+        }
+        
+        guard newPassword != oldPassword else {
+            changePasswordVM.errorMessage = "New password must be different from old password."
+            return
+        }
+        
+        guard newPassword == confirmPassword else {
+            changePasswordVM.errorMessage = "Passwords do not match."
+            return
+        }
+        
+        Task {
+            await changePasswordVM.changePassword(
+                oldPassword: oldPassword,
+                newPassword: newPassword
+            )
+        }
     }
 }
 

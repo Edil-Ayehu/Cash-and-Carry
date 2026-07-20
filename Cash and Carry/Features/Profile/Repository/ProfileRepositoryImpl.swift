@@ -17,4 +17,20 @@ final class ProfileRepositoryImpl: ProfileRepository {
     func getProfile() async throws -> ProfileResponse {
         try await profileService.getProfile()
     }
+    
+    func changePassword(
+        oldPassword: String,
+        newPassword: String
+    ) async throws -> ChangePasswordResponse {
+        let request = ChangePasswordRequest(
+            oldPassword: oldPassword,
+            newPassword: newPassword
+        )
+        
+        let response = try await profileService.changePassword(
+            request: request
+        )
+        
+        return response
+    }
 }
