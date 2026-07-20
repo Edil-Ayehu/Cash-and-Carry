@@ -24,24 +24,30 @@ struct ProfileView: View {
             Text("Profile")
                 .font(.custom("Outfit-Medium", size: 18))
                 .padding(.top)
+            
+            if profileVM.isLoading {
+                ProfileViewSkeleton()
+            } else {
+                ScrollView(showsIndicators: false) {
 
-            ScrollView(showsIndicators: false) {
+                    VStack(spacing: 32) {
+                        
+                        Spacer().frame(height: 4)
 
-                VStack(spacing: 32) {
-                    
-                    Spacer().frame(height: 4)
+                        profileHeader
 
-                    profileHeader
+                        accountInformation
 
-                    accountInformation
+                        preferences
 
-                    preferences
+                        Spacer(minLength: 20)
 
-                    Spacer(minLength: 20)
-
+                    }
+                    .padding()
                 }
-                .padding()
             }
+
+            
         }
         .background(Color.white)
         .alert("Logout", isPresented: $showLogoutAlert) {
@@ -90,9 +96,7 @@ struct ProfileView: View {
 private extension ProfileView {
     var profileHeader: some View {
         VStack {
-            if profileVM.isLoading {
-                ProgressView()
-            } else if let profile = profileVM.profile {
+             if let profile = profileVM.profile {
                 VStack(spacing: 8) {
 
                   ZStack {
@@ -139,9 +143,7 @@ private extension ProfileView {
     
     var accountInformation: some View {
         VStack {
-            if profileVM.isLoading {
-                ProgressView()
-            } else if let profile = profileVM.profile {
+            if let profile = profileVM.profile {
                 VStack(alignment: .leading, spacing: 24) {
 
                             Text("Account Information")
