@@ -105,30 +105,37 @@ private extension ProductsView {
         ScrollView(.horizontal, showsIndicators: false) {
 
             HStack(spacing: 12) {
+                if categoryVM.isLoading {
+                    ForEach(0..<5, id: \.self) { _ in
+                            CategoryChipSkeleton()
+                        }
+                } else {
+                    ForEach(categories) { category in
 
-                ForEach(categories) { category in
+                        Button {
 
-                    Button {
+                            selectedCategory = category.name
 
-                        selectedCategory = category.name
+                        } label: {
 
-                    } label: {
-
-                        Text(category.name)
-                            .font(.custom(selectedCategory == category.name ? "Outfit-Medium": "Outfit-Regular", size: 14))
-                            .foregroundColor(
-                                selectedCategory == category.name ? .white : .black
-                            )
-                            .padding(.horizontal, 24)
-                            .frame(height: 50)
-                            .background(
-                                selectedCategory == category.name
-                                ? Color.black
-                                : Color(.systemGray6)
-                            )
-                            .clipShape(Capsule())
+                            Text(category.name)
+                                .font(.custom(selectedCategory == category.name ? "Outfit-Medium": "Outfit-Regular", size: 14))
+                                .foregroundColor(
+                                    selectedCategory == category.name ? .white : .black
+                                )
+                                .padding(.horizontal, 24)
+                                .frame(height: 50)
+                                .background(
+                                    selectedCategory == category.name
+                                    ? Color.black
+                                    : Color(.systemGray6)
+                                )
+                                .clipShape(Capsule())
+                        }
                     }
                 }
+
+                
             }
         }
     }

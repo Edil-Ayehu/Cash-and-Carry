@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainTabView: View {
 
-    @State private var selectedTab: Tab = .home
+    @State private var selectedTab: Tab = .products
     
     @StateObject private var productVM = DIContainer.shared.makeProductViewModel()
     
