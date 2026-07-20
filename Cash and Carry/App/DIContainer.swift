@@ -43,6 +43,10 @@ final class DIContainer {
         MyVoucherRepositoryImpl(myVoucherService: myVoucherService)
     } ()
     
+    lazy var profileRepository: ProfileRepository = {
+        ProfileRepositoryImpl(profileService: profileService)
+    } ()
+    
     // MARK: Services
     
     lazy var apiClient: APIClient = {
@@ -63,6 +67,10 @@ final class DIContainer {
     
     lazy var myVoucherService: MyVoucherService = {
         MyVoucherServiceImpl(apiClient: apiClient)
+    } ()
+    
+    lazy var profileService: ProfileService = {
+        ProfileServiceImpl(apiClient: apiClient)
     } ()
     
     
@@ -102,5 +110,9 @@ final class DIContainer {
     
     func makeCategoryViewModel() -> CategoryViewModel {
         CategoryViewModel(productRepository: productRepository)
+    }
+    
+    func makeProfileViewModel() -> ProfileViewModel {
+        ProfileViewModel(profileRepository: profileRepository)
     }
 }

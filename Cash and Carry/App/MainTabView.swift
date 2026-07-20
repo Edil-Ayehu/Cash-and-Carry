@@ -14,6 +14,8 @@ struct MainTabView: View {
     @StateObject private var productVM = DIContainer.shared.makeProductViewModel()
     
     @StateObject private var myVoucherVM = DIContainer.shared.makeMyVoucherViewModel()
+    
+    @StateObject private var profileVM = DIContainer.shared.makeProfileViewModel()
 
     var body: some View {
 
@@ -51,12 +53,14 @@ struct MainTabView: View {
                     Label(Tab.profile.title, systemImage: Tab.profile.icon)
                 }
                 .tag(Tab.profile)
+                .environmentObject(profileVM)
 
         }
         .tint(.black) // Selected tab color
         .task {
             await productVM.fetchProducts(category: "")
             await myVoucherVM.fetchMyVouchers()
+            await profileVM.getProfile()
         }
     }
 }

@@ -14,6 +14,8 @@ struct ProfileView: View {
     @EnvironmentObject private var router: AppRouter
     
     @StateObject private var logoutVM = DIContainer.shared.makeLogoutViewModel()
+    
+    @EnvironmentObject private var profileVM: ProfileViewModel
         
     var body: some View {
 
@@ -87,40 +89,50 @@ struct ProfileView: View {
 
 private extension ProfileView {
     var profileHeader: some View {
-        VStack(spacing: 8) {
+        VStack {
+            if profileVM.isLoading {
+                Text("Loading...")
+            } else if let profile = profileVM.profile {
+                VStack(spacing: 8) {
 
-                    ZStack {
+                  ZStack {
 
-                        Circle()
+                       Circle()
                             .fill(Color.black)
                             .frame(width: 80, height: 80)
 
-                        Text("ET")
+                       Text("ET")
                             .font(.custom("Outfit-SemiBold", size: 26))
                             .foregroundColor(.white)
-                    }
+                            }
 
-                    Text("Edil Tade")
-                        .font(.custom("Outfit-SemiBold", size: 18))
+                           Text(profile.name)
+                                .font(.custom("Outfit-SemiBold", size: 18))
+                    
+                    
 
-                    Text("luckyOne@gmail.com")
-                        .font(.custom("Outfit-Regular", size: 14))
-                        .foregroundColor(.gray)
+                    Text(profile.email)
+                                .font(.custom("Outfit-Regular", size: 14))
+                                .foregroundColor(.gray)
 
-                    HStack(spacing: 10) {
+                            HStack(spacing: 10) {
 
-                        Image(systemName: "checkmark.circle.fill")
-                            .foregroundColor(.green)
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundColor(.green)
 
-                        Text("Active Customer")
-                            .font(.custom("Outfit-Medium", size: 14))
-                            .foregroundColor(.green)
-                    }
-                    .padding(.horizontal, 24)
-                    .frame(height: 46)
-                    .background(Color.green.opacity(0.1))
-                    .clipShape(Capsule())
-                }
+                                Text("Active Customer")
+                                    .font(.custom("Outfit-Medium", size: 14))
+                                    .foregroundColor(.green)
+                            }
+                            .padding(.horizontal, 24)
+                            .frame(height: 46)
+                            .background(Color.green.opacity(0.1))
+                            .clipShape(Capsule())
+                        }
+            }
+                
+        }
+       
     }
     
     var accountInformation: some View {
