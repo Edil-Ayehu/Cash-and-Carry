@@ -9,6 +9,8 @@ import SwiftUI
 struct ProductCard: View {
     
     let product: ProductResponse
+    
+    @EnvironmentObject var cartVM: CartViewModel
 
     var body: some View {
 
@@ -16,15 +18,46 @@ struct ProductCard: View {
             
             productImage
             
-            
-            VStack (alignment: .leading){
-                Text(product.category.name)
-                    .font(.custom("Outfit-Medium", size: 14))
-                    .foregroundColor(.cyan)
+            HStack {
+                VStack (alignment: .leading){
+                    Text(product.category.name)
+                        .font(.custom("Outfit-Medium", size: 14))
+                        .foregroundColor(.cyan)
 
-                Text(product.name)
-                    .font(.custom("Outfit-Medium", size: 16))
-            }.padding()
+                    Text(product.name)
+                        .font(.custom("Outfit-Medium", size: 16))
+                }.padding()
+                
+                Spacer()
+                
+                if !cartVM.contains(productId: product.id) {
+                    Button{
+                        print("Added to cart")
+                        Task {
+                            await cartVM.add(product: product)
+                        }
+            
+                    } label: {
+                        if cartVM.loadingProductId == product.id {
+                            ProgressView()
+                                .padding(.trailing, 8)
+                        } else {
+                            Image(systemName: "cart.badge.plus")
+                                .font(.system(size: 14))
+                                .padding(6)
+                                .background(Circle().fill(Color.black))
+                                .foregroundColor(.white)
+                                .cornerRadius(4)
+                                .padding(.trailing, 8)
+                        }
+                    }
+                }
+                
+                    
+            }
+            
+            
+            
 
             
 

@@ -88,10 +88,13 @@ private extension ProductDetailsView {
             
             PrimaryButton(
                 title: cartVM.contains(productId: product.id) ? "In Cart" : "Add to Cart",
-                isLoading: cartVM.isLoading,
+                isLoading: cartVM.loadingProductId == product.id,
                 isEnabled: !cartVM.contains(productId: product.id),
                 action: {
-                    cartVM.add(product: product)
+                    Task {
+                        await cartVM.add(product: product)
+                        
+                    }
                 }
             )
         }

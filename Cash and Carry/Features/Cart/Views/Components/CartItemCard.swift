@@ -10,6 +10,8 @@ import SwiftUI
 struct CartItemCard: View {
 
     @Binding var item: CartItem
+    
+    @EnvironmentObject var cartVM: CartViewModel
 
     var body: some View {
 
@@ -46,9 +48,10 @@ struct CartItemCard: View {
 
                 Button {
 
-                    if item.quantity > 1 {
-                        item.quantity -= 1
-                    }
+//                    if item.quantity > 1 {
+//                        item.quantity -= 1
+//                    }
+                    cartVM.decrease(item)
 
                 } label: {
 
@@ -66,7 +69,8 @@ struct CartItemCard: View {
 
                 Button {
 
-                    item.quantity += 1
+//                    item.quantity += 1
+                    cartVM.increase(item)
 
                 } label: {
 

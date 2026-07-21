@@ -12,7 +12,7 @@ final class CartViewModel: ObservableObject {
 
     @Published var items: [CartItem] = []
     
-    @Published var isLoading: Bool = false
+    @Published var loadingProductId: String?
     
     @Published var productAdded: Bool = false
     
@@ -29,24 +29,19 @@ final class CartViewModel: ObservableObject {
         items = service.getItems()
     }
 
-    func add(product: ProductResponse) {
-        isLoading = true
+    func add(product: ProductResponse) async {
+        loadingProductId = product.id
         
         defer {
-            isLoading = false
+            loadingProductId = nil
         }
         
-        do {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: .init {
-                self.service.add(product)
-                self.loadCart()
-            })
-            
+        try? await Task.sleep(for: .seconds(2))
+
+            service.add(product)
+            loadCart()
+
             productAdded = true
-            
-        } catch {
-            errorMessage = error.localizedDescription
-        }
         
     }
 

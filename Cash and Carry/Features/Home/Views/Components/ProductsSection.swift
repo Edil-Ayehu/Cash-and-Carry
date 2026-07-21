@@ -14,6 +14,9 @@ struct ProductsSection: View {
     
     @EnvironmentObject var productVM: ProductViewModel
     
+    @StateObject var cartVM = DIContainer.shared.makeCartViewModel()
+    
+    
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -53,6 +56,7 @@ struct ProductsSection: View {
                             .onTapGesture {
                                 router.push(.productDetails(product))
                             }
+                            .environmentObject(cartVM)
                     }
                 }
 
@@ -61,6 +65,9 @@ struct ProductsSection: View {
 
         }
         .padding(.horizontal, 20)
+        .onAppear {
+            cartVM.loadCart()
+        }
 
     }
 

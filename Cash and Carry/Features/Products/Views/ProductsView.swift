@@ -23,6 +23,8 @@ struct ProductsView: View {
     
     @StateObject private var categoryVM = DIContainer.shared.makeCategoryViewModel()
     
+    @StateObject private var cartVM = DIContainer.shared.makeCartViewModel()
+    
     @State private var searchTask: Task<Void, Never>?
     
     private var categories: [CategoryResponse] {
@@ -69,6 +71,7 @@ struct ProductsView: View {
                                     .onTapGesture {
                                         router.push(.productDetails(product))
                                     }
+                                    .environmentObject(cartVM)
                             }
                         }
                     }
@@ -81,6 +84,9 @@ struct ProductsView: View {
         .background(Color.white)
         .task {
             await categoryVM.fetchCategories()
+        }
+        .onAppear {
+            cartVM.loadCart()
         }
         .onChange(of: searchText) {_, newValue in
             searchTask?.cancel()

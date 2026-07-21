@@ -31,7 +31,7 @@ struct CartView: View {
 
                 Spacer()
                 
-                if (cartVM.items.isEmpty) {
+                if (!cartVM.items.isEmpty) {
                     Button {
                         showDeleteConfirmationDialog = true
                     } label: {
@@ -58,6 +58,7 @@ struct CartView: View {
                         ForEach($cartVM.items) { $item in
 
                             CartItemCard(item: $item)
+                                .environmentObject(cartVM)
                         }
                     }
                     .padding()
