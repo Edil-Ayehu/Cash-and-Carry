@@ -10,6 +10,7 @@ import Foundation
 @MainActor
 final class ProductViewModel: ObservableObject {
     @Published var isLoading: Bool = false
+    @Published var isRefreshing: Bool = false
     
     @Published var errorMessage: String?
     
@@ -23,12 +24,19 @@ final class ProductViewModel: ObservableObject {
     
     func fetchProducts(
         category: String?,
-        search: String?
+        search: String?,
+        refresh: Bool = false
     ) async {
+        if refresh {
+            isRefreshing = true
+        } else {
+            isLoading = true
+        }
        isLoading = true
         
         defer{
             isLoading = false
+            isRefreshing = false
         }
         
         do {

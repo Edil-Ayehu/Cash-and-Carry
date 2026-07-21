@@ -38,8 +38,6 @@ struct ProductsView: View {
 
     var body: some View {
 
-        ScrollView(showsIndicators: false) {
-
             VStack(alignment: .leading, spacing: 20) {
 
                 Text("Products")
@@ -51,36 +49,45 @@ struct ProductsView: View {
                 categorySection
                 
                 if productVM.isLoading {
-                    LazyVGrid(columns: columns, spacing: 20) {
-                        ForEach(0..<8) { _ in
-                            ProductCardSkeleton()
-                        }
-                    }
-                } else {
-                    if (productVM.products.isEmpty) {
-                        ProductsEmptyStateView(
-                                title: "No Products Found",
-                                message: "Try searching with a different keyword or select another category."
-                            )
-                        .frame(maxWidth: .infinity)
-                    } else {
+                    ScrollView (showsIndicators: false) {
                         LazyVGrid(columns: columns, spacing: 20) {
-                            ForEach(productVM.products) { product in
-
-                                ProductCard(product: product)
-                                    .onTapGesture {
-                                        router.push(.productDetails(product))
-                                    }
-                                    .environmentObject(cartVM)
+                            ForEach(0..<8) { _ in
+                                ProductCardSkeleton()
                             }
                         }
                     }
+                    
+                } else {
+                    ScrollView (showsIndicators: false) {
+                        if (productVM.products.isEmpty) {
+                            ProductsEmptyStateView(
+                                    title: "No Products Found",
+                                    message: "Try searching with a different keyword or select another category."
+                                )
+                            .frame(maxWidth: .infinity)
+                        } else {
+                            LazyVGrid(columns: columns, spacing: 20) {
+                                ForEach(productVM.products) { product in
+
+                                    ProductCard(product: product)
+                                        .onTapGesture {
+                                            router.push(.productDetails(product))
+                                        }
+                                        .environmentObject(cartVM)
+                                }
+                            }
+                            
+                        }
+                    }
+                    .refreshable {
+                        await productVM.fetchProducts(category: nil, search: nil)
+                    }
+                    
                 }
 
                 
-            }
-            .padding()
         }
+        .padding()
         .background(Color.white)
         .task {
             await categoryVM.fetchCategories()
