@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct ProductDetailsView: View {
 
     @Environment(\.dismiss) private var dismiss
 
     let product: ProductResponse
+    
+    @StateObject var cartVM = DIContainer.shared.makeCartViewModel()
 
     var body: some View {
 
@@ -31,6 +34,13 @@ struct ProductDetailsView: View {
         }
         .navigationBarBackButtonHidden()
         .background(Color.white)
+        .toast(isPresenting: $cartVM.productAdded) { 
+            AlertToast(
+                displayMode: .hud,
+                type: .complete(.green),
+                title: "\(product.name) Product added to cart"
+            )
+        }
     }
 }
 
@@ -78,7 +88,10 @@ private extension ProductDetailsView {
             
             PrimaryButton(
                 title: "Add to Cart",
-                action: {}
+                isLoading: cartVM.isLoading,
+                action: {
+                    cartVM.add(product: product)
+                }
             )
         }
         .padding(.horizontal)

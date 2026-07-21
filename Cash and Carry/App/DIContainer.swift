@@ -73,6 +73,12 @@ final class DIContainer {
         ProfileServiceImpl(apiClient: apiClient)
     } ()
     
+    lazy var cartService: CartService = {
+        UserDefaultsCartService()
+    } ()
+    
+//    private lazy var cartService: CartService = UserDefaultsCartService()
+    
     
     // MARK: ViewModels
     
@@ -118,5 +124,9 @@ final class DIContainer {
     
     func makeChangePasswordViewModel() -> ChangePasswordViewModel {
         ChangePasswordViewModel(profileRepository: profileRepository)
+    }
+    
+    func makeCartViewModel() -> CartViewModel {
+        CartViewModel(service: cartService)
     }
 }

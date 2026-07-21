@@ -11,11 +11,8 @@ struct CartView: View {
     
     @Binding var selectedTab: Tab
 
-    @State private var items: [CartItem] = [
-        CartItem(product: Product.dummyProducts[0], quantity: 1),
-        CartItem(product: Product.dummyProducts[1], quantity: 2),
-        CartItem(product: Product.dummyProducts[2], quantity: 1)
-    ]
+    
+    @StateObject private var cartVM = DIContainer.shared.makeCartViewModel()
     
     @State private var showDeleteConfirmationDialog: Bool = false
 
@@ -34,7 +31,7 @@ struct CartView: View {
 
                 Spacer()
                 
-                if (!items.isEmpty) {
+                if (cartVM.items.isEmpty) {
                     Button {
                         showDeleteConfirmationDialog = true
                     } label: {
@@ -51,14 +48,14 @@ struct CartView: View {
 
             // MARK: Cart Items
             
-            if (items.isEmpty) {
+            if (cartVM.items.isEmpty) {
                 emptyCartState
             } else {
                 ScrollView(showsIndicators: false) {
 
                     LazyVStack(spacing: 18) {
 
-                        ForEach($items) { $item in
+                        ForEach($cartVM.items) { $item in
 
                             CartItemCard(item: $item)
                         }
@@ -72,7 +69,7 @@ struct CartView: View {
 
             // MARK: Bottom Buttons
             
-            if (!items.isEmpty) {
+            if (!cartVM.items.isEmpty) {
                 Divider()
                 
                 HStack(spacing: 16) {
@@ -95,12 +92,15 @@ struct CartView: View {
 
             
         }
+        .onAppear() {
+             cartVM.loadCart()
+        }
         .background(Color.white)
         .alert("Clear Cart", isPresented: $showDeleteConfirmationDialog) {
             Button("Cancel", role: .cancel) {}
             
             Button("Delete", role: .destructive) {
-                items.removeAll()
+                cartVM.items.removeAll()
                 
             }
         } message: {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProductCategoryResponse: Decodable, Identifiable, Equatable, Hashable {
+struct ProductCategoryResponse: Codable, Identifiable, Equatable, Hashable {
 
     let id: String
     let name: String

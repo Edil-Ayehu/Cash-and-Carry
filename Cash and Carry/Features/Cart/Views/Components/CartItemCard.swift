@@ -15,11 +15,26 @@ struct CartItemCard: View {
 
         HStack(spacing: 18) {
 
-            Image(item.product.image)
-                .resizable()
-                .scaledToFill()
-                .frame(width: 64, height: 64)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
+            AsyncImage(url: URL(string: item.product.image)) { phase in
+                switch phase {
+                case .empty:
+                    ProgressView()
+                        .frame(width: 64, height: 64)
+
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 64, height: 64)
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+
+                case .failure:
+                    placeholderImage
+
+                @unknown default:
+                    placeholderImage
+                }
+            }
 
             Text(item.product.name)
                 .font(.custom("Outfit-Medium", size: 16))
@@ -68,5 +83,14 @@ struct CartItemCard: View {
         .background(Color.white)
         .clipShape(RoundedRectangle(cornerRadius: 22))
         .shadow(color: .black.opacity(0.05), radius: 8)
+    }
+    
+    private var placeholderImage: some View {
+        Image(systemName: "photo")
+            .font(.system(size: 24))
+            .foregroundColor(.gray.opacity(0.6))
+            .frame(width: 64, height: 64)
+            .background(Color.gray.opacity(0.1))
+            .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }
