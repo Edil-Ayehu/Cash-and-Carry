@@ -14,4 +14,6 @@ protocol CartService {
     func decrease(productId: String)
     func remove(productId: String)
     func clear()
+    
+    func contains(productId: String) -> Bool
 }

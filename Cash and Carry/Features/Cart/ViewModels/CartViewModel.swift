@@ -69,4 +69,8 @@ final class CartViewModel: ObservableObject {
         service.clear()
         loadCart()
     }
+    
+    func contains(productId: String) -> Bool {
+        service.contains(productId: productId)
+    }
 }

@@ -90,4 +90,8 @@ final class UserDefaultsCartService: CartService {
     func clear() {
         UserDefaults.standard.removeObject(forKey: key)
     }
+    
+    func contains(productId: String) -> Bool {
+        getItems().contains { $0.product.id == productId }
+    }
 }

@@ -87,8 +87,9 @@ private extension ProductDetailsView {
             Spacer(minLength: 80)
             
             PrimaryButton(
-                title: "Add to Cart",
+                title: cartVM.contains(productId: product.id) ? "In Cart" : "Add to Cart",
                 isLoading: cartVM.isLoading,
+                isEnabled: !cartVM.contains(productId: product.id),
                 action: {
                     cartVM.add(product: product)
                 }
