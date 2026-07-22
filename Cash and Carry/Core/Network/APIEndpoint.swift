@@ -25,6 +25,7 @@ enum APIEndpoints {
     
     // MARK: Vouchers
     static let myVouchers = "\(baseURL)/vouchers/my-vouchers"
+    static let generateVoucher = "\(baseURL)/vouchers"
     
     // MARK: Profile
     static let profile = "\(baseURL)/auth/me"

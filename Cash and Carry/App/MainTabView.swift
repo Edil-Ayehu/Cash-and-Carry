@@ -16,6 +16,8 @@ struct MainTabView: View {
     @StateObject private var myVoucherVM = DIContainer.shared.makeMyVoucherViewModel()
     
     @StateObject private var profileVM = DIContainer.shared.makeProfileViewModel()
+    
+    @StateObject private var voucherVM = DIContainer.shared.makeGenerateVoucherViewModel()
 
     var body: some View {
 
@@ -47,6 +49,7 @@ struct MainTabView: View {
                     Label(Tab.cart.title, systemImage: Tab.cart.icon)
                 }
                 .tag(Tab.cart)
+                .environmentObject(voucherVM)
 
             ProfileView()
                 .tabItem {

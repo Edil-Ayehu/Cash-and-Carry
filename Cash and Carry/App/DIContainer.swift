@@ -47,6 +47,10 @@ final class DIContainer {
         ProfileRepositoryImpl(profileService: profileService)
     } ()
     
+    lazy var voucherRepository: VoucherRepository = {
+        VoucherRepositoryImpl(voucherService: voucherService)
+    } ()
+    
     // MARK: Services
     
     lazy var apiClient: APIClient = {
@@ -75,6 +79,10 @@ final class DIContainer {
     
     lazy var cartService: CartService = {
         UserDefaultsCartService()
+    } ()
+    
+    lazy var voucherService: VoucherService = {
+        VoucherServiceImpl(apiClient: apiClient)
     } ()
     
 //    private lazy var cartService: CartService = UserDefaultsCartService()
@@ -128,5 +136,9 @@ final class DIContainer {
     
     func makeCartViewModel() -> CartViewModel {
         CartViewModel(service: cartService)
+    }
+    
+    func makeGenerateVoucherViewModel() -> GenerateVoucherViewModel {
+        GenerateVoucherViewModel(voucherRepository: voucherRepository)
     }
 }

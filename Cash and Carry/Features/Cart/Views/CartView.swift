@@ -15,6 +15,10 @@ struct CartView: View {
     @StateObject private var cartVM = DIContainer.shared.makeCartViewModel()
     
     @State private var showDeleteConfirmationDialog: Bool = false
+    
+    @EnvironmentObject private var voucherVM: GenerateVoucherViewModel
+    
+    @State private var showSuccessDialog: Bool = false
 
     var body: some View {
 
@@ -77,7 +81,21 @@ struct CartView: View {
                     
                     PrimaryButton(
                         title: "Generate Voucher",
-                        action: {},
+                        isLoading: voucherVM.isLoading,
+                        action: {
+                            let request = GenerateVoucherRequest(
+                                items: cartVM.items.map {
+                                    GenerateVoucherItemRequest(
+                                        productId: $0.product.id,
+                                        quantity: $0.quantity
+                                    )
+                                }
+                            )
+                            
+                            Task {
+                                await voucherVM.generateVoucher(request: request)
+                            }
+                        },
                         height: 48
                     )
                     
@@ -106,6 +124,11 @@ struct CartView: View {
             }
         } message: {
             Text("Are you sure you want to remove all items from your cart?")
+        }
+        .onChange(of: voucherVM.code) { _, code in
+            if code != nil {
+                showSuccessDialog = true
+            }
         }
     }
 }
