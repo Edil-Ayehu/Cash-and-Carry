@@ -12,8 +12,8 @@ struct PrimaryButton: View {
     let title: String
     var isLoading: Bool = false
     var isEnabled: Bool = true
-    let action: () -> Void
     var height: CGFloat = 58
+    let action: () -> Void
 
     var body: some View {
 

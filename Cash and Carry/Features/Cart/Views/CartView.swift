@@ -82,6 +82,7 @@ struct CartView: View {
                     PrimaryButton(
                         title: "Generate Voucher",
                         isLoading: voucherVM.isLoading,
+                        height: 48,
                         action: {
                             let request = GenerateVoucherRequest(
                                 items: cartVM.items.map {
@@ -95,8 +96,7 @@ struct CartView: View {
                             Task {
                                 await voucherVM.generateVoucher(request: request)
                             }
-                        },
-                        height: 48
+                        }
                     )
                     
                     OutlinedButton(
@@ -168,15 +168,16 @@ private extension CartView {
 
                     PrimaryButton(
                         title: "Browse Products",
-                        action: {
-                            // Navigate to Products tab
-                            selectedTab = .products
-                        },
                         height: 48
-                    )
+                    ) {
+                        // Navigate to Products tab
+                        selectedTab = .products
+                    }
+            
                     .padding(.horizontal, 40)
 
                     Spacer()
+            
                 }
     }
 }

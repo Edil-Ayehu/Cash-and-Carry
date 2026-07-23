@@ -83,11 +83,10 @@ struct VoucherSuccessDialog: View {
 
                 PrimaryButton(
                     title: "Got It",
-                    action: {
-                        onDismiss()
-                    },
                     height: 48
-                )
+                ) {
+                    onDismiss()
+                }
             }
             .padding(28)
             .background(Color.white)
