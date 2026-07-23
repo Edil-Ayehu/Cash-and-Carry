@@ -25,9 +25,6 @@ struct ProductCardSkeleton: View {
 
                 skeleton
                     .frame(height: 18)
-
-                skeleton
-                    .frame(width: 100, height: 18)
             }
             .padding()
         }

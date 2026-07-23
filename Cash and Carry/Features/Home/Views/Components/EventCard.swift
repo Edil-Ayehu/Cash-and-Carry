@@ -10,6 +10,8 @@ struct EventCard: View {
     
     let event: EventResponseModel
     
+    @State private var isAnimating = false
+    
     var body: some View {
         
         VStack(alignment: .leading, spacing: 0) {
@@ -85,8 +87,31 @@ private extension EventCard {
     var imageSkeleton: some View {
             RoundedRectangle(cornerRadius: 0)
                 .fill(Color.gray.opacity(0.18))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(
+                            LinearGradient(
+                                colors: [
+                                    Color.clear,
+                                    Color.white.opacity(0.6),
+                                    Color.clear
+                                ],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .offset(x: isAnimating ? 250 : -250)
+                )
                 .frame(maxWidth: .infinity)
                 .frame(height: 160)
+                .onAppear {
+                    withAnimation(
+                        .linear(duration: 1.1)
+                        .repeatForever(autoreverses: false)
+                    ) {
+                        isAnimating = true
+                    }
+                }
         }
     
     var placeholderImage: some View {

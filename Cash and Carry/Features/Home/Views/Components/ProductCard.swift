@@ -10,10 +10,12 @@ struct ProductCard: View {
     
     let product: ProductResponse
     
+    @State private var isAnimating = false
+    
     @EnvironmentObject var cartVM: CartViewModel
-
+    
     var body: some View {
-
+        
         VStack(alignment: .leading, spacing: 0) {
             
             productImage
@@ -23,7 +25,7 @@ struct ProductCard: View {
                     Text(product.category.name)
                         .font(.custom("Outfit-Medium", size: 14))
                         .foregroundColor(.cyan)
-
+                    
                     Text(product.name)
                         .font(.custom("Outfit-Medium", size: 16))
                 }.padding()
@@ -36,7 +38,7 @@ struct ProductCard: View {
                         Task {
                             await cartVM.add(product: product)
                         }
-            
+                        
                     } label: {
                         if cartVM.loadingProductId == product.id {
                             ProgressView()
@@ -53,41 +55,39 @@ struct ProductCard: View {
                     }
                 }
                 
-                    
+                
             }
             
             
             
-
             
-
+            
+            
         }
         .frame(maxWidth: .infinity)
         .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 22))
         .shadow(color: .black.opacity(0.04), radius: 8)
-
+        
     }
-
+    
 }
 
 
 private extension ProductCard {
-
+    
     @ViewBuilder
     var productImage: some View {
-
+        
         if let url = URL(string: product.image), !product.image.isEmpty {
-
+            
             AsyncImage(url: url) { phase in
-
+                
                 switch phase {
-
+                    
                 case .empty:
-                    ProgressView()
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 140)
-
+                    imageSkeleton
+                    
                 case .success(let image):
                     image
                         .resizable()
@@ -95,20 +95,50 @@ private extension ProductCard {
                         .frame(maxWidth: .infinity)
                         .frame(height: 140)
                         .clipped()
-
+                    
                 case .failure(_):
                     placeholderImage
-
+                    
                 @unknown default:
                     placeholderImage
                 }
             }
-
+            
         } else {
             placeholderImage
         }
     }
-
+    
+    var imageSkeleton: some View {
+        RoundedRectangle(cornerRadius: 0)
+            .fill(Color.gray.opacity(0.18))
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                Color.clear,
+                                Color.white.opacity(0.6),
+                                Color.clear
+                            ],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .offset(x: isAnimating ? 250 : -250)
+            )
+            .frame(maxWidth: .infinity)
+            .frame(height: 140)
+            .onAppear {
+                withAnimation(
+                    .linear(duration: 1.1)
+                    .repeatForever(autoreverses: false)
+                ) {
+                    isAnimating = true
+                }
+            }
+    }
+    
     var placeholderImage: some View {
         Image(systemName: "photo")
             .font(.system(size: 40))
