@@ -130,6 +130,18 @@ struct CartView: View {
                 showSuccessDialog = true
             }
         }
+        .overlay {
+            if showSuccessDialog,
+               let voucher = voucherVM.code {
+                VoucherSuccessDialog(
+                    voucherCode: voucher,
+                    onDismiss: {
+                        showSuccessDialog = false
+                        cartVM.clearCart()
+                    }
+                )
+            }
+        }
     }
 }
 
