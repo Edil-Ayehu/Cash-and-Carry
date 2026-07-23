@@ -24,6 +24,8 @@ struct VouchersView: View {
     private var displayedVouchers: [MyVoucherResponse] {
         selectedTab == 0 ? pendingVouchers : completedVouchers
     }
+    
+    @State private var selectedVoucher: MyVoucherResponse?
 
     var body: some View {
 
@@ -66,6 +68,9 @@ struct VouchersView: View {
                             LazyVStack(spacing: 20) {
                                 ForEach(displayedVouchers) { voucher in
                                     VoucherCard(voucher: voucher)
+                                        .onTapGesture {
+                                            selectedVoucher = voucher
+                                        }
                                 }
                                 
                             }
@@ -81,6 +86,12 @@ struct VouchersView: View {
             }
             .padding()
             .background(Color(.systemGray6).opacity(0.15))
+            .sheet(item: $selectedVoucher) { voucher in
+                VoucherDetailsBottomSheet(voucher: voucher)
+                    .presentationDetents([.medium, .large])
+                    .presentationDragIndicator(.visible)
+                    .presentationCornerRadius(32 )
+            }
     }
 
     private var picker: some View {
