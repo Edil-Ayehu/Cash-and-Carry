@@ -51,6 +51,10 @@ final class DIContainer {
         VoucherRepositoryImpl(voucherService: voucherService)
     } ()
     
+    lazy var favoriteRepository: FavoriteRepository = {
+        FavoriteRepositoryImpl(favService: favoriteService)
+    } ()
+    
     // MARK: Services
     
     lazy var apiClient: APIClient = {
@@ -85,8 +89,10 @@ final class DIContainer {
         VoucherServiceImpl(apiClient: apiClient)
     } ()
     
-//    private lazy var cartService: CartService = UserDefaultsCartService()
-    
+    lazy var favoriteService: FavoriteService = {
+        FavoriteServiceImpl(apiClient: apiClient)
+    } ()
+        
     
     // MARK: ViewModels
     
@@ -140,5 +146,9 @@ final class DIContainer {
     
     func makeGenerateVoucherViewModel() -> GenerateVoucherViewModel {
         GenerateVoucherViewModel(voucherRepository: voucherRepository)
+    }
+    
+    func makeAddToFavoriteViewModel() -> AddToFavoriteViewModel {
+        AddToFavoriteViewModel(favRepository: favoriteRepository)
     }
 }

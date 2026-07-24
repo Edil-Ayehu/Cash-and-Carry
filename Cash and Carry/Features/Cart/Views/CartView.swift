@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct CartView: View {
     
@@ -18,7 +19,10 @@ struct CartView: View {
     
     @EnvironmentObject private var voucherVM: GenerateVoucherViewModel
     
+    @StateObject private var favVM = DIContainer.shared.makeAddToFavoriteViewModel()
+    
     @State private var showSuccessDialog: Bool = false
+    @State private var showAddToFavSuccessDialog: Bool = false
 
     var body: some View {
 
@@ -101,7 +105,22 @@ struct CartView: View {
                     
                     OutlinedButton(
                         title: "Add to Favorite",
-                        action: {},
+                        isLoading: favVM.isLoading,
+                        action: {
+                            let request = AddToFavoriteRequest(
+                                name: "Weekly Grocery",
+                                items: cartVM.items.map {
+                                    FavoriteItemRequest(
+                                        productId: $0.product.id,
+                                        quantity: $0.quantity,
+                                    )
+                                }
+                            )
+                            
+                            Task {
+                                await favVM.addToFavorite(request: request)
+                            }
+                        },
                         height: 48
                     )
 
@@ -141,6 +160,27 @@ struct CartView: View {
                     }
                 )
             }
+        }
+        .onChange(of: favVM.isSuccess) { _, isSuccess in
+            if isSuccess {
+                showAddToFavSuccessDialog = true
+            }
+        }
+        .toast(isPresenting: $showAddToFavSuccessDialog) {
+            AlertToast(
+                displayMode: .hud,
+                type: .complete(.green),
+                title: "Products added to favorites successfully"
+            )
+        }
+        .alert("Error", isPresented: Binding(
+            get: { favVM.errorMessage != nil},
+            set: { _ in favVM.errorMessage = nil}
+        )) {
+            Button("OK", role: .cancel) {}
+            
+        } message: {
+            Text(favVM.errorMessage ?? "Something went wrong")
         }
     }
 }
