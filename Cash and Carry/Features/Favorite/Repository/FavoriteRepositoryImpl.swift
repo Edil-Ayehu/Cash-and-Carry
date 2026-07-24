@@ -22,4 +22,8 @@ final class FavoriteRepositoryImpl: FavoriteRepository {
             request: request
         )
     }
+    
+    func fetchFavorites() async throws -> [FavoriteResponse] {
+        try await favService.fetchFavorites()
+    }
 }

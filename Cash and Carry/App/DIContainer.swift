@@ -151,4 +151,8 @@ final class DIContainer {
     func makeAddToFavoriteViewModel() -> AddToFavoriteViewModel {
         AddToFavoriteViewModel(favRepository: favoriteRepository)
     }
+    
+    func makeFetchFavViewModel() -> FetchFavViewModel {
+        FetchFavViewModel(favRepository: favoriteRepository)
+    }
 }

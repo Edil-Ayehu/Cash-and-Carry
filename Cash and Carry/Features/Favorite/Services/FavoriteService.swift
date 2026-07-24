@@ -11,4 +11,6 @@ protocol FavoriteService {
     func addToFavorite(
         request: AddToFavoriteRequest
     ) async throws -> AddToFavoriteResponse
+    
+    func fetchFavorites() async throws -> [FavoriteResponse]
 }

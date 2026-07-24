@@ -38,6 +38,9 @@ struct MyApp: View {
                     case .changePassword:
                         ChangePasswordView()
                         
+                    case .favorite:
+                        FavoriteView()
+                        
                     }
                 }
         }
@@ -73,6 +76,9 @@ struct MyApp: View {
                 
             case .changePassword:
                 ChangePasswordView()
+                
+            case .favorite:
+                FavoriteView()
                 
             }
         }

@@ -18,9 +18,15 @@ final class FavoriteServiceImpl: FavoriteService {
         request: AddToFavoriteRequest
     ) async throws -> AddToFavoriteResponse {
         try await apiClient.request(
-            endpoint: APIEndpoints.addToFavorite,
+            endpoint: APIEndpoints.favorites,
             method: "POST",
             body: request
+        )
+    }
+    
+    func fetchFavorites() async throws -> [FavoriteResponse] {
+        try await apiClient.request(
+            endpoint: APIEndpoints.favorites
         )
     }
 }

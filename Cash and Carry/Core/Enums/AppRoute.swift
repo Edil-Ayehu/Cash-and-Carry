@@ -15,4 +15,5 @@ enum AppRoute: Hashable {
     case mainTab
     case productDetails(ProductResponse)
     case changePassword
+    case favorite
 }

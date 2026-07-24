@@ -32,5 +32,5 @@ enum APIEndpoints {
     static let changePassword = "\(baseURL)/auth/change-password"
     
     // MARK: Favorite
-    static let addToFavorite = "\(baseURL)/vouchers/favorites"
+    static let favorites = "\(baseURL)/vouchers/favorites"
 }

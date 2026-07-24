@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HomeHeader: View {
+    
+    @EnvironmentObject private var router: AppRouter
 
     var body: some View {
 
@@ -38,9 +40,15 @@ struct HomeHeader: View {
 
                     HStack(spacing: 14) {
 
-                        HeaderIcon(systemImage: "heart")
+                        HeaderIcon(
+                            systemImage: "heart"
+                        ) {
+                            router.push(.favorite)
+                        }
 
-                        HeaderIcon(systemImage: "bell")
+                        HeaderIcon(
+                            systemImage: "bell"
+                        ) {}
 
                     }
 

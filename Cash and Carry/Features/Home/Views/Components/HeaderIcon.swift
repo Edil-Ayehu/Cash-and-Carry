@@ -9,11 +9,12 @@ import SwiftUI
 struct HeaderIcon: View {
 
     let systemImage: String
+    let action: () -> Void
 
     var body: some View {
 
         Button {
-
+            action()
         } label: {
 
             Image(systemName: systemImage)
