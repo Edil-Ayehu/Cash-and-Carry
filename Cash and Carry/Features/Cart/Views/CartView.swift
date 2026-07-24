@@ -23,6 +23,9 @@ struct CartView: View {
     
     @State private var showSuccessDialog: Bool = false
     @State private var showAddToFavSuccessDialog: Bool = false
+    
+    @State private var favoriteName = ""
+    @State private var showFavoriteNameSheet = false
 
     var body: some View {
 
@@ -107,19 +110,9 @@ struct CartView: View {
                         title: "Add to Favorite",
                         isLoading: favVM.isLoading,
                         action: {
-                            let request = AddToFavoriteRequest(
-                                name: "Weekly Grocery",
-                                items: cartVM.items.map {
-                                    FavoriteItemRequest(
-                                        productId: $0.product.id,
-                                        quantity: $0.quantity,
-                                    )
-                                }
-                            )
                             
-                            Task {
-                                await favVM.addToFavorite(request: request)
-                            }
+                            showFavoriteNameSheet = true
+                        
                         },
                         height: 48
                     )
@@ -181,6 +174,32 @@ struct CartView: View {
             
         } message: {
             Text(favVM.errorMessage ?? "Something went wrong")
+        }
+        .sheet(isPresented: $showFavoriteNameSheet) {
+            AddFavoriteNameSheet(
+                name: $favoriteName,
+                onSave: {
+                    let request = AddToFavoriteRequest(
+                        name: favoriteName,
+                        items: cartVM.items.map {
+                            FavoriteItemRequest(
+                                productId: $0.product.id,
+                                quantity: $0.quantity,
+                            )
+                        }
+                    )
+                    
+                    Task {
+                        await favVM.addToFavorite(request: request)
+                    }
+                    
+                    favoriteName = ""
+                    showFavoriteNameSheet = false
+                }
+            )
+            .presentationDetents([.height(260)])
+            .presentationDragIndicator(.visible)
+            .presentationCornerRadius(24)
         }
     }
 }
