@@ -16,7 +16,12 @@ struct FavoriteDetailView: View {
     
     @StateObject private var voucherVM = DIContainer.shared.makeGenerateVoucherViewModel()
     
+    @StateObject private var deleteFavVM = DIContainer.shared.makeDeleteFavViewModel()
+    
+    @EnvironmentObject private var router: AppRouter
+    
     @State private var showGenerateSuccessDialog: Bool = false
+    
     
     var body: some View {
 
@@ -63,12 +68,19 @@ struct FavoriteDetailView: View {
                     },
                 )
                 
+                
                 PrimaryButton(
                     title: "Delete Favorite",
+                    isLoading: deleteFavVM.isLoading,
                     height: 50,
                     bgColor: .red,
                     action: {
                         // Delete Favorite
+                        Task {
+                            await deleteFavVM.deleteFavorite(
+                                id: favorite.id
+                            )
+                        }
                     },
                 )
 
@@ -94,6 +106,23 @@ struct FavoriteDetailView: View {
                     }
                 )
             }
+        }
+        
+        .onChange(of: deleteFavVM.isDeleted) {_, isDeleted in
+            if isDeleted {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    router.pop()
+                }
+            }
+            
+        }
+        
+        .toast( isPresenting: $deleteFavVM.isDeleted) {
+            AlertToast(
+                displayMode: .hud,
+                type: .complete(.green),
+                title: deleteFavVM.successMessage
+            )
         }
 
     }

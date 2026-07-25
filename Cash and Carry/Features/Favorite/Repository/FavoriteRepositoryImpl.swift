@@ -26,4 +26,10 @@ final class FavoriteRepositoryImpl: FavoriteRepository {
     func fetchFavorites() async throws -> [FavoriteResponse] {
         try await favService.fetchFavorites()
     }
+    
+    func deleteFavorite(
+        id: String
+    ) async throws -> DeleteFavResponse {
+        try await favService.deleteFavorite(id: id)
+    }
 }

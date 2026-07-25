@@ -29,4 +29,17 @@ final class FavoriteServiceImpl: FavoriteService {
             endpoint: APIEndpoints.favorites
         )
     }
+    
+    func deleteFavorite(
+        id: String
+    ) async throws -> DeleteFavResponse {
+        var endpoint = APIEndpoints.favorites + "/\(id)"
+        
+        return try await apiClient.request(
+            endpoint: endpoint,
+            method: "DELETE"
+        )
+        
+        
+    }
 }

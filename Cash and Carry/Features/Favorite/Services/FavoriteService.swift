@@ -13,4 +13,8 @@ protocol FavoriteService {
     ) async throws -> AddToFavoriteResponse
     
     func fetchFavorites() async throws -> [FavoriteResponse]
+    
+    func deleteFavorite(
+        id: String
+    ) async throws -> DeleteFavResponse
 }
