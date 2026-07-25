@@ -20,7 +20,7 @@ final class ProductServiceImpl: ProductService {
         search: String?
     ) async throws -> [ProductResponse] {
         
-        var endpoint = "\(APIEndpoints.products)?catalog=true"
+        var endpoint = "\(APIEndpoints.products)?catalog=false"
         
         if let category,
             !category.isEmpty {

@@ -12,6 +12,8 @@ struct FavoriteView: View {
     @Environment(\.dismiss) private var dismiss
     
     @StateObject private var favoriteVM = DIContainer.shared.makeFetchFavViewModel()
+    
+    @EnvironmentObject var router: AppRouter
 
     var body: some View {
 
@@ -40,6 +42,9 @@ struct FavoriteView: View {
                             ForEach(favoriteVM.favorites) { favorite in
 
                                 FavoriteCard(favorite: favorite)
+                                    .onTapGesture {
+                                        router.push(.favoriteDetail(favorite))
+                                    }
                             }
                         }
 

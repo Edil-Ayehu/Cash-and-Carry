@@ -41,6 +41,9 @@ struct MyApp: View {
                     case .favorite:
                         FavoriteView()
                         
+                    case .favoriteDetail(let favorite):
+                        FavoriteDetailView(favorite: favorite)
+                        
                     }
                 }
         }
@@ -79,6 +82,9 @@ struct MyApp: View {
                 
             case .favorite:
                 FavoriteView()
+                
+            case .favoriteDetail(let favorite):
+                FavoriteDetailView(favorite: favorite)
                 
             }
         }

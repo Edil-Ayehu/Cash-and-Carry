@@ -16,4 +16,5 @@ enum AppRoute: Hashable {
     case productDetails(ProductResponse)
     case changePassword
     case favorite
+    case favoriteDetail(FavoriteResponse)
 }

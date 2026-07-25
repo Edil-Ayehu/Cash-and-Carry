@@ -22,11 +22,11 @@ struct FavoriteCard: View {
 
                 RoundedRectangle(cornerRadius: 18)
                     .fill(Color.pink.opacity(0.15))
-                    .frame(width: 70, height: 70)
+                    .frame(width: 50, height: 50)
                     .overlay {
 
                         Image(systemName: "heart.fill")
-                            .font(.system(size: 30))
+                            .font(.system(size: 22))
                             .foregroundColor(.red)
                     }
 
@@ -35,13 +35,14 @@ struct FavoriteCard: View {
 
 
                     Text(favorite.name ?? "Wishlist Items")
-                        .font(.custom("Outfit-SemiBold", size: 18))
+                        .font(.custom("Outfit-Medium", size: 16))
 
 
                     HStack(spacing: 6) {
 
                         Image(systemName: "clock")
-                            .font(.system(size: 14))
+                            .font(.system(size: 12))
+                            .foregroundColor(.gray)
 
                         Text(
                             favorite.createdAt.formattedDate()
@@ -58,7 +59,8 @@ struct FavoriteCard: View {
 
 
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 20))
+                    .font(.system(size: 16))
+                    .foregroundColor(.gray)
             }
 
 
@@ -157,11 +159,13 @@ struct FavoriteCard: View {
 
 
     var imagePlaceholder: some View {
-
-        Image(systemName: "photo")
-            .foregroundColor(.gray)
-            .background(
-                Color.gray.opacity(0.15)
-            )
+        Circle()
+            .fill(Color.gray.opacity(0.2))
+            .frame(width: 55, height: 55)
+            .overlay {
+                Image(systemName: "photo")
+                    .font(.system(size: 20))
+                    .foregroundColor(.gray)
+            }
     }
 }
