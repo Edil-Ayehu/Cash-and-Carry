@@ -13,6 +13,7 @@ struct PrimaryButton: View {
     var isLoading: Bool = false
     var isEnabled: Bool = true
     var height: CGFloat = 58
+    var bgColor: Color = .black
     let action: () -> Void
 
     var body: some View {
@@ -38,7 +39,7 @@ struct PrimaryButton: View {
             .frame(maxWidth: .infinity)
             .frame(height: height)
             .background(
-                isEnabled ? Color.black : Color.gray.opacity(0.5)
+                isEnabled ? bgColor : Color.gray.opacity(0.5)
             )
             .clipShape(Capsule())
 

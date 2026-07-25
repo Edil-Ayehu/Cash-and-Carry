@@ -20,10 +20,10 @@ struct FavoriteProductCard: View {
             VStack(alignment: .leading, spacing: 10) {
 
                 Text(item.product.name)
-                    .font(.custom("Outfit-Medium", size: 20))
+                    .font(.custom("Outfit-Medium", size: 16))
 
                 Text("Qty \(item.quantity)")
-                    .font(.custom("Outfit-Medium", size: 18))
+                    .font(.custom("Outfit-Medium", size: 14))
                     .foregroundColor(.blue)
                     .padding(.horizontal, 18)
                     .padding(.vertical, 8)
@@ -52,14 +52,14 @@ private extension FavoriteProductCard {
 
                     RoundedRectangle(cornerRadius: 18)
                         .fill(Color.gray.opacity(0.15))
-                        .frame(width: 110, height: 110)
+                        .frame(width: 60, height: 60)
 
                 case .success(let image):
 
                     image
                         .resizable()
                         .scaledToFill()
-                        .frame(width: 110, height: 110)
+                        .frame(width: 60, height: 60)
                         .clipShape(RoundedRectangle(cornerRadius: 18))
 
                 case .failure:
@@ -82,11 +82,11 @@ private extension FavoriteProductCard {
 
         RoundedRectangle(cornerRadius: 18)
             .fill(Color.gray.opacity(0.15))
-            .frame(width: 110, height: 110)
+            .frame(width: 60, height: 60)
             .overlay(
                 Image(systemName: "photo")
-                    .font(.system(size: 34))
-                    .foregroundColor(.gray)
+                    .font(.system(size: 24))
+                    .foregroundColor(.gray.opacity(0.6))
             )
     }
 }

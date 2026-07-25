@@ -45,21 +45,17 @@ struct FavoriteDetailView: View {
                         // Generate voucher
                     },
                 )
+                
+                PrimaryButton(
+                    title: "Delete Favorite",
+                    height: 50,
+                    bgColor: .red,
+                    action: {
+                        // Delete Favorite
+                    },
+                )
 
-                Button {
-
-                    // Delete favorite
-
-                } label: {
-
-                    Text("Delete Favorite")
-                        .font(.custom("Outfit-Medium", size: 16))
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 50)
-                        .background(Color.red)
-                        .clipShape(Capsule())
-                }
+               
             }
             .padding()
         }
@@ -79,13 +75,13 @@ private extension FavoriteDetailView {
                 dismiss()
             } label: {
                 Image(systemName: "chevron.left")
-                    .font(.system(size: 22, weight: .medium))
+                    .font(.system(size: 18, weight: .medium))
             }
 
             Spacer()
 
             Text(favorite.name ?? "Favorite")
-                .font(.custom("Outfit-Medium", size: 20))
+                .font(.custom("Outfit-Medium", size: 16))
 
             Spacer()
 
@@ -102,20 +98,20 @@ private extension FavoriteDetailView {
 
                 RoundedRectangle(cornerRadius: 18)
                     .fill(Color.pink.opacity(0.15))
-                    .frame(width: 80, height: 80)
+                    .frame(width: 60, height: 60)
                     .overlay(
                         Image(systemName: "heart.fill")
-                            .font(.system(size: 34))
+                            .font(.system(size: 24))
                             .foregroundColor(.red)
                     )
 
                 VStack(alignment: .leading, spacing: 6) {
 
                     Text(favorite.name ?? "Unnamed Favorite")
-                        .font(.custom("Outfit-SemiBold", size: 22))
+                        .font(.custom("Outfit-Medium", size: 16))
 
                     Text("\(favorite.items.count) product\(favorite.items.count == 1 ? "" : "s")")
-                        .font(.custom("Outfit-Regular", size: 16))
+                        .font(.custom("Outfit-Regular", size: 14))
                         .foregroundColor(.gray)
                 }
 
