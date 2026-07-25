@@ -6,13 +6,18 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct FavoriteDetailView: View {
 
     @Environment(\.dismiss) private var dismiss
 
     let favorite: FavoriteResponse
-
+    
+    @StateObject private var voucherVM = DIContainer.shared.makeGenerateVoucherViewModel()
+    
+    @State private var showGenerateSuccessDialog: Bool = false
+    
     var body: some View {
 
         VStack(spacing: 0) {
@@ -40,9 +45,21 @@ struct FavoriteDetailView: View {
 
                 PrimaryButton(
                     title: "Generate Voucher",
+                    isLoading: voucherVM.isLoading,
                     height: 50,
                     action: {
                         // Generate voucher
+                        let request = GenerateVoucherRequest(
+                            items: favorite.items.map {
+                                GenerateVoucherItemRequest(
+                                    productId: $0.productId,
+                                    quantity: $0.quantity
+                                )
+                            }
+                        )
+                        Task {
+                            await voucherVM.generateVoucher(request: request)
+                        }
                     },
                 )
                 
@@ -61,6 +78,24 @@ struct FavoriteDetailView: View {
         }
         .background(Color.white)
         .navigationBarBackButtonHidden()
+        .onChange(of: voucherVM.code) { _, code in
+            if code != nil {
+                showGenerateSuccessDialog = true
+            }
+        }
+        
+        .overlay {
+            if showGenerateSuccessDialog,
+               let code = voucherVM.code {
+                VoucherSuccessDialog(
+                    voucherCode: code,
+                    onDismiss: {
+                        showGenerateSuccessDialog = false
+                    }
+                )
+            }
+        }
+
     }
 }
 
