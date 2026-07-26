@@ -178,7 +178,7 @@ private extension ProfileView {
                         icon: "square.and.pencil",
                         title: "Edit Profile"
                     ) {
-
+                        router.push(.editProfileView)
                     }
 
                     ProfileMenuRow(
