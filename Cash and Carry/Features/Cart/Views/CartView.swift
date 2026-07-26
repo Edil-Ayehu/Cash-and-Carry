@@ -131,7 +131,7 @@ struct CartView: View {
             Button("Cancel", role: .cancel) {}
             
             Button("Delete", role: .destructive) {
-                cartVM.items.removeAll()
+                cartVM.clearCart()
                 
             }
         } message: {

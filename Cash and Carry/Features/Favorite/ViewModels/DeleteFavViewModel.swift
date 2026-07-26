@@ -34,7 +34,7 @@ final class DeleteFavViewModel: ObservableObject {
         }
         
         do{
-            var response = try await favRepository.deleteFavorite(id: id)
+            let response = try await favRepository.deleteFavorite(id: id)
             
             isDeleted = true
             successMessage = response.message
