@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct EditProfileView: View {
 
@@ -14,6 +15,16 @@ struct EditProfileView: View {
     @State private var fullName = "Abdul Kedir"
     @State private var email = "abdi@gmail.com"
     @State private var phone = "+27930884422"
+    
+    @StateObject private var editProfileVM = DIContainer.shared.makeEditProfileViewModel()
+    
+    @State private var showSuccessToast : Bool = false
+    
+    @EnvironmentObject private var router: AppRouter
+    
+    var isFormValid: Bool {
+        !fullName.isEmpty
+    }
 
     var body: some View {
 
@@ -51,14 +62,50 @@ struct EditProfileView: View {
 
             PrimaryButton(
                 title: "Save Changes",
-                height: 54
-            ) {
-                // Save profile
-            }
+                isLoading: editProfileVM.isLoading,
+                isEnabled: isFormValid,
+                height: 54,
+                action: _handleChange
+            )
             .padding()
         }
         .background(Color.white)
         .navigationBarBackButtonHidden()
+        .onChange(of: editProfileVM.isEdited) { _, isEdited in
+            if isEdited {
+                showSuccessToast = true
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    router.pop()
+                }
+            }
+        }
+        .toast(isPresenting: $showSuccessToast) {
+            AlertToast(
+                displayMode: .hud,
+                type: .complete(.green),
+                title: "Profile updated successfully"
+            )
+        }
+        .alert("Error", isPresented: Binding(
+            get: {editProfileVM.errorMessage != nil},
+            set: { _ in editProfileVM.errorMessage = nil}
+        )) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(editProfileVM.errorMessage ?? "Something went wrong.")
+        }
+    }
+    
+    func _handleChange() {
+        guard !fullName.isEmpty else {
+            editProfileVM.errorMessage = "Full name is required"
+            return
+        }
+        
+        Task {
+            await editProfileVM.editProfile(name: fullName, email: email)
+        }
     }
 }
 

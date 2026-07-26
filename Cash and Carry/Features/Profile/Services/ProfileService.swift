@@ -12,4 +12,8 @@ protocol ProfileService {
         request: ChangePasswordRequest
     ) async throws -> ChangePasswordResponse
     
+    func editProfile(
+        request: EditProfileRequest
+    ) async throws -> EditProfileResponse
+    
 }

@@ -29,4 +29,14 @@ final class ProfileServiceImpl: ProfileService {
             body: request
         )
     }
+    
+    func editProfile(
+        request: EditProfileRequest
+    ) async throws -> EditProfileResponse {
+        try await apiClient.request(
+            endpoint: APIEndpoints.editProfile,
+            method: "PATCH",
+            body: request
+        )
+    }
 }

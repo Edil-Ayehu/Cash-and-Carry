@@ -159,4 +159,8 @@ final class DIContainer {
     func makeDeleteFavViewModel() -> DeleteFavViewModel {
         DeleteFavViewModel(favRepository: favoriteRepository)
     }
+    
+    func makeEditProfileViewModel() -> EditProfileViewModel {
+        EditProfileViewModel(profileRepository: profileRepository)
+    }
 }

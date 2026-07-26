@@ -30,6 +30,7 @@ enum APIEndpoints {
     // MARK: Profile
     static let profile = "\(baseURL)/auth/me"
     static let changePassword = "\(baseURL)/auth/change-password"
+    static let editProfile = "\(baseURL)/auth/profile"
     
     // MARK: Favorite
     static let favorites = "\(baseURL)/vouchers/favorites"

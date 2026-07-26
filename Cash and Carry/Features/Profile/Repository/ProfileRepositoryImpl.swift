@@ -33,4 +33,18 @@ final class ProfileRepositoryImpl: ProfileRepository {
         
         return response
     }
+    
+    func editProfile(
+        name: String,
+        email: String?
+    ) async throws -> EditProfileResponse {
+        let request = EditProfileRequest(
+            name: name,
+            email: email
+        )
+        
+        let response = try await profileService.editProfile(request: request)
+        
+        return response
+    }
 }

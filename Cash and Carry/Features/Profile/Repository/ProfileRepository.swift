@@ -12,4 +12,9 @@ protocol ProfileRepository {
         oldPassword: String,
         newPassword: String
     ) async throws -> ChangePasswordResponse
+    
+    func editProfile(
+        name: String,
+        email: String?
+    ) async throws -> EditProfileResponse
 }
