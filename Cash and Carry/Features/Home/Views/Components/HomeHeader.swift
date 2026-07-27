@@ -46,10 +46,6 @@ struct HomeHeader: View {
                             router.push(.favorite)
                         }
 
-                        HeaderIcon(
-                            systemImage: "bell"
-                        ) {}
-
                     }
 
                 }
