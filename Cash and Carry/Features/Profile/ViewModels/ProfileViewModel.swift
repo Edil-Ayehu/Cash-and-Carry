@@ -21,7 +21,9 @@ final class ProfileViewModel: ObservableObject {
     }
     
     func getProfile() async {
-        isLoading = true
+        profile = profileRepository.getCachedProfile()
+        
+        isLoading = profile == nil
         
         errorMessage = nil
         

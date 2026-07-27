@@ -47,7 +47,10 @@ final class DIContainer {
     } ()
     
     lazy var profileRepository: ProfileRepository = {
-        ProfileRepositoryImpl(profileService: profileService)
+        ProfileRepositoryImpl(
+            profileService: profileService,
+            profileLocalDataSource: profileLocalDataSource
+        )
     } ()
     
     lazy var voucherRepository: VoucherRepository = {
@@ -65,6 +68,10 @@ final class DIContainer {
     
     lazy var voucherLocalDataSource: VoucherLocalDataSource = {
         VoucherLocalDataSourceImpl()
+    } ()
+    
+    lazy var profileLocalDataSource: ProfileLocalDataSource = {
+        ProfileLocalDataSourceImpl()
     } ()
     
     // MARK: Services

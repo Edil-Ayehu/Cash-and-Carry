@@ -9,13 +9,26 @@ import Foundation
 
 final class ProfileRepositoryImpl: ProfileRepository {
     private var profileService: ProfileService
+    private var profileLocalDataSource: ProfileLocalDataSource
     
-    init(profileService: ProfileService) {
+    init(
+        profileService: ProfileService,
+        profileLocalDataSource: ProfileLocalDataSource
+    ) {
         self.profileService = profileService
+        self.profileLocalDataSource = profileLocalDataSource
     }
     
     func getProfile() async throws -> ProfileResponse {
-        try await profileService.getProfile()
+        let profile = try await profileService.getProfile()
+        
+        profileLocalDataSource.saveProfile(profile)
+        
+        return profile
+    }
+    
+    func getCachedProfile() -> ProfileResponse? {
+        profileLocalDataSource.getProfile()
     }
     
     func changePassword(

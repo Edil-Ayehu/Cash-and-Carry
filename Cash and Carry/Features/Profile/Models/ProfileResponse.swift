@@ -5,7 +5,7 @@
 //  Created by Edil on 20/07/2026.
 //
 
-struct ProfileResponse: Decodable {
+struct ProfileResponse: Codable {
     let phone: String
     let email: String?
     let name: String
