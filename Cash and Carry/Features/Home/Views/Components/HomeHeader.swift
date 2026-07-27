@@ -6,6 +6,11 @@
 //
 
 import SwiftUI
+import Contacts
+import AuthenticationServices
+import PassKit
+import EventKit
+import Speech
 
 struct HomeHeader: View {
     

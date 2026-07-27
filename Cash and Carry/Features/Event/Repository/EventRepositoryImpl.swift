@@ -10,12 +10,27 @@ import Foundation
 final class EventRepositoryImpl: EventRepository {
     
     private var eventService: EventService
+    private var eventLocalDataSource: EventLocalDataSource
     
-    init(eventService: EventService) {
+    
+    init(
+        eventService: EventService,
+        eventLocalDataSource: EventLocalDataSource
+    ) {
         self.eventService = eventService
+        self.eventLocalDataSource = eventLocalDataSource
     }
     
     func fetchEvents() async throws -> [EventResponseModel] {
-        try await eventService.fetchEvents()
+        let events = try await eventService.fetchEvents()
+        
+        eventLocalDataSource.saveEvents(events)
+        
+        return events
     }
+    
+    func getCachedEvents() -> [EventResponseModel] {
+        eventLocalDataSource.getEvents()
+    }
+    
 }

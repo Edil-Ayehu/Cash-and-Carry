@@ -7,4 +7,6 @@
 
 protocol EventRepository {
     func fetchEvents() async throws -> [EventResponseModel]
+    
+    func getCachedEvents() -> [EventResponseModel]
 }

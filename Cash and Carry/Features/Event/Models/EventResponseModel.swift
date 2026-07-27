@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct EventResponseModel: Decodable, Identifiable, Hashable {
+struct EventResponseModel: Codable, Identifiable, Hashable {
     let id: String
     let title: String
     let description: String

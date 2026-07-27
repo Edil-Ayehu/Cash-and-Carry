@@ -22,7 +22,11 @@ final class EventViewModel: ObservableObject {
     }
     
     func fetchEvents() async {
-        isLoading = true
+        // Show cached data immediately
+        events = eventRepository.getCachedEvents()
+        
+        
+        isLoading = events.isEmpty
         errorMessage = nil
         
         defer {
@@ -34,11 +38,12 @@ final class EventViewModel: ObservableObject {
             
         } catch {
             
-            if let apiError = error as? APIError {
-                            errorMessage = apiError.localizedDescription
-                        } else {
-                            errorMessage = error.localizedDescription
-                        }
+            // Only show an error if we have nothing cached
+            
+            if events.isEmpty {
+                errorMessage = error.localizedDescription
+            }
+            
         }
     }
 }
