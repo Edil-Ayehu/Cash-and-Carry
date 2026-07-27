@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct VoucherProductResponse: Decodable, Identifiable, Hashable {
+struct VoucherProductResponse: Codable, Identifiable, Hashable {
 
     let id: String
     let name: String

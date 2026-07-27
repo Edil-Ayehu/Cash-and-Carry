@@ -43,7 +43,7 @@ final class DIContainer {
     } ()
     
     lazy var myVoucherRepository: MyVoucherRepository = {
-        MyVoucherRepositoryImpl(myVoucherService: myVoucherService)
+        MyVoucherRepositoryImpl(myVoucherService: myVoucherService, voucherLocalDataSource: voucherLocalDataSource)
     } ()
     
     lazy var profileRepository: ProfileRepository = {
@@ -61,6 +61,10 @@ final class DIContainer {
     // MARK: Local DataSources
     lazy var eventLocalDataSource: EventLocalDataSource = {
        EventLocalDataSourceImpl()
+    } ()
+    
+    lazy var voucherLocalDataSource: VoucherLocalDataSource = {
+        VoucherLocalDataSourceImpl()
     } ()
     
     // MARK: Services

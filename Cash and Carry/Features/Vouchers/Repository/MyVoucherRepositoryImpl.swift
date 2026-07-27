@@ -10,11 +10,25 @@ import Foundation
 final class MyVoucherRepositoryImpl: MyVoucherRepository {
     private var myVoucherService: MyVoucherService
     
-    init(myVoucherService: MyVoucherService) {
+    private var voucherLocalDataSource: VoucherLocalDataSource
+    
+    init(
+        myVoucherService: MyVoucherService,
+        voucherLocalDataSource: VoucherLocalDataSource
+    ) {
         self.myVoucherService = myVoucherService
+        self.voucherLocalDataSource = voucherLocalDataSource
     }
     
     func fetchMyVouchers() async throws -> [MyVoucherResponse] {
-        try await myVoucherService.fetchMyVouchers()
+        let vouchers = try await myVoucherService.fetchMyVouchers()
+        
+        voucherLocalDataSource.saveVouchers(vouchers)
+        
+        return vouchers
+    }
+    
+    func getCachedMyVouchers() -> [MyVoucherResponse] {
+        voucherLocalDataSource.getVouchers()
     }
 }

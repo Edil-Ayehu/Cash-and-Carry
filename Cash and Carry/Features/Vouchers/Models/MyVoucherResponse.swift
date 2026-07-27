@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MyVoucherResponse: Decodable, Identifiable, Hashable {
+struct MyVoucherResponse: Codable, Identifiable, Hashable {
 
     let id: String
     let code: String

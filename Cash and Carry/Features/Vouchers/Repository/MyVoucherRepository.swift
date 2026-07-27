@@ -7,4 +7,6 @@
 
 protocol MyVoucherRepository {
     func fetchMyVouchers() async throws -> [MyVoucherResponse]
+    
+    func getCachedMyVouchers() -> [MyVoucherResponse]
 }

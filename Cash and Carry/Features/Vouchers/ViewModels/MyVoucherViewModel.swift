@@ -22,17 +22,22 @@ final class MyVoucherViewModel: ObservableObject {
     }
     
     func fetchMyVouchers(refresh: Bool = false) async {
+        
+        if !refresh {
+            vouchers = myVoucherRepository.getCachedMyVouchers()
+        }
+        
         if refresh {
             isRefreshing = true
         } else {
-            isLoading = true
+            isLoading = vouchers.isEmpty
         }
         errorMessage = nil
         
         defer {
-                isRefreshing = false
+            isRefreshing = false
             
-                isLoading = false
+            isLoading = false
             
         }
         
@@ -40,15 +45,11 @@ final class MyVoucherViewModel: ObservableObject {
             vouchers = try await myVoucherRepository.fetchMyVouchers()
             
         } catch {
-            if let apiError = error as? APIError {
-                    errorMessage = apiError.localizedDescription
-              } else {
-                  if let apiError = error as? APIError {
-                              errorMessage = apiError.localizedDescription
-                          } else {
-                              errorMessage = error.localizedDescription
-                          }
-             }
+            
+            // show error only if voucher is empty
+            if vouchers.isEmpty {
+                errorMessage = error.localizedDescription
+            }
         }
     }
 }
