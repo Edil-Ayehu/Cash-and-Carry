@@ -22,7 +22,13 @@ final class FetchFavViewModel: ObservableObject {
     }
     
     func fetchFavorites() async {
-        isLoading = true
+        
+        // Show local data immediately
+        favorites = favRepository.getCachedFavorites()
+        
+        
+        isLoading = favorites.isEmpty
+        
         errorMessage = nil
         
         defer {
@@ -33,7 +39,9 @@ final class FetchFavViewModel: ObservableObject {
             favorites = try await favRepository.fetchFavorites()
             
         } catch {
-            errorMessage = error.localizedDescription
+            if favorites.isEmpty {
+                errorMessage = error.localizedDescription
+            }
         }
     }
 }

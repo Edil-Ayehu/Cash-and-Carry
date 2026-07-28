@@ -58,7 +58,10 @@ final class DIContainer {
     } ()
     
     lazy var favoriteRepository: FavoriteRepository = {
-        FavoriteRepositoryImpl(favService: favoriteService)
+        FavoriteRepositoryImpl(
+            favService: favoriteService,
+            favLocalDataSource: favoriteLocalDataSource
+        )
     } ()
     
     // MARK: Local DataSources
@@ -72,6 +75,10 @@ final class DIContainer {
     
     lazy var profileLocalDataSource: ProfileLocalDataSource = {
         ProfileLocalDataSourceImpl()
+    } ()
+    
+    lazy var favoriteLocalDataSource: FavoriteLocalDataSource = {
+        FavoriteLocalDataSourceImpl()
     } ()
     
     // MARK: Services

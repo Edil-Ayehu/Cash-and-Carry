@@ -14,6 +14,8 @@ protocol FavoriteRepository {
     
     func fetchFavorites() async throws -> [FavoriteResponse]
     
+    func getCachedFavorites() -> [FavoriteResponse]
+    
     func deleteFavorite(
         id: String
     ) async throws -> DeleteFavResponse

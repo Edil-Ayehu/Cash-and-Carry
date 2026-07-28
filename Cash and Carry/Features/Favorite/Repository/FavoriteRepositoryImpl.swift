@@ -10,9 +10,14 @@ import Foundation
 final class FavoriteRepositoryImpl: FavoriteRepository {
     
     private var favService: FavoriteService
+    private var favLocalDataSource: FavoriteLocalDataSource
     
-    init(favService: FavoriteService) {
+    init(
+        favService: FavoriteService,
+        favLocalDataSource: FavoriteLocalDataSource
+    ) {
         self.favService = favService
+        self.favLocalDataSource = favLocalDataSource
     }
     
     func addToFavorite(
@@ -24,7 +29,14 @@ final class FavoriteRepositoryImpl: FavoriteRepository {
     }
     
     func fetchFavorites() async throws -> [FavoriteResponse] {
-        try await favService.fetchFavorites()
+        let favorites = try await favService.fetchFavorites()
+        favLocalDataSource.saveFavorites(favorites)
+        
+        return favorites
+    }
+    
+    func getCachedFavorites() -> [FavoriteResponse] {
+        favLocalDataSource.getFavorites()
     }
     
     func deleteFavorite(
@@ -32,4 +44,5 @@ final class FavoriteRepositoryImpl: FavoriteRepository {
     ) async throws -> DeleteFavResponse {
         try await favService.deleteFavorite(id: id)
     }
+    
 }
