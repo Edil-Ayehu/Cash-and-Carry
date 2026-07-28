@@ -178,7 +178,10 @@ private extension ProfileView {
                         icon: "square.and.pencil",
                         title: "Edit Profile"
                     ) {
-                        router.push(.editProfileView)
+                        guard let profile = profileVM.profile else { return }
+                        
+                        router.push(.editProfileView(profile))
+                        
                     }
 
                     ProfileMenuRow(

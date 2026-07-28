@@ -9,12 +9,15 @@ import SwiftUI
 import AlertToast
 
 struct EditProfileView: View {
+    
+    let profile: ProfileResponse
 
     @Environment(\.dismiss) private var dismiss
+    
 
-    @State private var fullName = "Abdul Kedir"
-    @State private var email = "abdi@gmail.com"
-    @State private var phone = "+27930884422"
+    @State private var fullName: String
+    @State private var email: String
+    @State private var phone: String
     
     @StateObject private var editProfileVM = DIContainer.shared.makeEditProfileViewModel()
     
@@ -22,8 +25,16 @@ struct EditProfileView: View {
     
     @EnvironmentObject private var router: AppRouter
     
+    init(profile: ProfileResponse) {
+        self.profile = profile
+        
+        _fullName = State(initialValue: profile.name)
+        _email = State(initialValue: profile.email ?? "")
+        _phone = State(initialValue: profile.phone)
+    }
+    
     var isFormValid: Bool {
-        !fullName.isEmpty
+        !profile.name.isEmpty
     }
 
     var body: some View {
