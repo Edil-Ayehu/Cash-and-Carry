@@ -23,6 +23,8 @@ final class ProfileLocalDataSourceImpl: ProfileLocalDataSource {
     
     func saveProfile(_ profile: ProfileResponse) {
         guard let data = try? JSONEncoder().encode(profile) else { return }
+        
+        UserDefaults.standard.set(data, forKey: key)
     }
     
     func clearProfile() {
