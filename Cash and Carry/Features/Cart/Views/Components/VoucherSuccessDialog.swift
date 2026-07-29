@@ -93,5 +93,11 @@ struct VoucherSuccessDialog: View {
             .clipShape(RoundedRectangle(cornerRadius: 32))
             .padding(.horizontal, 28)
         }
+        .onAppear {
+            print("✌️ Triggering success haptic feedback")
+            let generator = UINotificationFeedbackGenerator()
+            generator.prepare()
+            generator.notificationOccurred(.success)
+        }
     }
 }

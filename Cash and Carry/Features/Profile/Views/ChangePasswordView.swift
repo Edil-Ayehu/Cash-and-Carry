@@ -24,7 +24,8 @@ struct ChangePasswordView: View {
     
     private var isFormValid: Bool {
         oldPassword.count >= 6 &&
-        newPassword.count >= 6
+        newPassword.count >= 6 &&
+        confirmPassword.count >= 6
     }
 
     var body: some View {
