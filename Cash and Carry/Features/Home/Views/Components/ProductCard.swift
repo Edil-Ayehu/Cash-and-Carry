@@ -5,6 +5,7 @@
 //  Created by Edil on 16/07/2026.
 //
 import SwiftUI
+import Kingfisher
 
 struct ProductCard: View {
     
@@ -76,34 +77,63 @@ struct ProductCard: View {
 
 private extension ProductCard {
     
+//    @ViewBuilder
+//    var productImage: some View {
+//
+//        if let url = URL(string: product.image), !product.image.isEmpty {
+//
+//            AsyncImage(url: url) { phase in
+//
+//                switch phase {
+//
+//                case .empty:
+//                    imageSkeleton
+//
+//                case .success(let image):
+//                    image
+//                        .resizable()
+//                        .scaledToFill()
+//                        .frame(maxWidth: .infinity)
+//                        .frame(height: 140)
+//                        .clipped()
+//
+//                case .failure(_):
+//                    placeholderImage
+//
+//                @unknown default:
+//                    placeholderImage
+//                }
+//            }
+//
+//        } else {
+//            placeholderImage
+//        }
+//    }
+    
     @ViewBuilder
     var productImage: some View {
-        
-        if let url = URL(string: product.image), !product.image.isEmpty {
-            
-            AsyncImage(url: url) { phase in
-                
-                switch phase {
-                    
-                case .empty:
+
+        if let url = URL(string: product.image),
+           !product.image.isEmpty {
+
+            KFImage(url)
+                .setProcessor(
+                    DownsamplingImageProcessor(
+                        size: CGSize(width: 400, height: 140)
+                    )
+                )
+                .cacheOriginalImage()
+                .retry(maxCount: 2, interval: .seconds(1))
+                .placeholder {
                     imageSkeleton
-                    
-                case .success(let image):
-                    image
-                        .resizable()
-                        .scaledToFill()
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 140)
-                        .clipped()
-                    
-                case .failure(_):
-                    placeholderImage
-                    
-                @unknown default:
-                    placeholderImage
                 }
-            }
-            
+                .fade(duration: 0.2)
+                .resizable()
+                .scaledToFill()
+                .frame(maxWidth: .infinity)
+                .frame(height: 140)
+                .clipped()
+
         } else {
             placeholderImage
         }
