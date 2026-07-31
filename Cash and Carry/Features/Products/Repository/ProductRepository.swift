@@ -12,5 +12,7 @@ protocol ProductRepository {
         search: String?
     ) async throws -> [ProductResponse]
     
+    func getCachedProducts() -> [ProductResponse]
+    
     func fetchCategories() async throws -> [CategoryResponse]
 }

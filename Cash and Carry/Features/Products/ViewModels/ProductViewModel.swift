@@ -27,12 +27,13 @@ final class ProductViewModel: ObservableObject {
         search: String?,
         refresh: Bool = false
     ) async {
+        products = productRepository.getCachedProducts()
+        
         if refresh {
             isRefreshing = true
         } else {
-            isLoading = true
+            isLoading = products.isEmpty
         }
-       isLoading = true
         
         defer{
             isLoading = false

@@ -32,7 +32,10 @@ final class DIContainer {
     } ()
     
     lazy var productRepository: ProductRepository = {
-        ProductRepositoryImpl(productService: productService)
+        ProductRepositoryImpl(
+            productService: productService,
+            productLocalDataSource: productLocalDataSource
+        )
     } ()
     
     lazy var eventRepository: EventRepository = {
@@ -79,6 +82,10 @@ final class DIContainer {
     
     lazy var favoriteLocalDataSource: FavoriteLocalDataSource = {
         FavoriteLocalDataSourceImpl()
+    } ()
+    
+    lazy var productLocalDataSource: ProductLocalDataSource = {
+        ProductLocalDataSourceImpl()
     } ()
     
     // MARK: Services
