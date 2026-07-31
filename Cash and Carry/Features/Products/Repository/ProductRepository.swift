@@ -15,4 +15,6 @@ protocol ProductRepository {
     func getCachedProducts() -> [ProductResponse]
     
     func fetchCategories() async throws -> [CategoryResponse]
+    
+    func getCachedCategories() -> [CategoryResponse]
 }

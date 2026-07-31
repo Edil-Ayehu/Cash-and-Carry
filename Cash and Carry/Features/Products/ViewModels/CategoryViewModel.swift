@@ -21,7 +21,10 @@ final class CategoryViewModel: ObservableObject {
     }
     
     func fetchCategories() async {
-        isLoading = true
+        categories = productRepository.getCachedCategories()
+        
+        isLoading = categories.isEmpty
+        
         errorMessage = nil
         
         defer {

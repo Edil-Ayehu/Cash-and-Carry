@@ -5,7 +5,7 @@
 //  Created by Edil on 20/07/2026.
 //
 
-struct CategoryResponse: Decodable, Identifiable {
+struct CategoryResponse: Codable, Identifiable {
     let id: String
     let name: String
     

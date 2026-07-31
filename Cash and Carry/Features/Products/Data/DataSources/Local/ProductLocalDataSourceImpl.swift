@@ -10,6 +10,7 @@ import Foundation
 final class ProductLocalDataSourceImpl: ProductLocalDataSource {
     
     private var key = "cached-products"
+    private var categoryKey = "cached-categories"
     
     func getProducts() -> [ProductResponse] {
         guard
@@ -29,5 +30,25 @@ final class ProductLocalDataSourceImpl: ProductLocalDataSource {
     
     func clearProducts() {
         UserDefaults.standard.removeObject(forKey: key)
+    }
+    
+    func getCategories() -> [CategoryResponse] {
+        guard
+            let data = UserDefaults.standard.data(forKey: categoryKey),
+            let categories = try? JSONDecoder().decode([CategoryResponse].self, from: data)
+        else {
+            return []
+        }
+        
+        return categories
+    }
+    
+    func saveCategories(_ categories: [CategoryResponse]) {
+        guard let data = try? JSONEncoder().encode(categories) else { return }
+        UserDefaults.standard.set(data, forKey: categoryKey)
+    }
+    
+    func clearCategories() {
+        UserDefaults.standard.removeObject(forKey: categoryKey)
     }
 }

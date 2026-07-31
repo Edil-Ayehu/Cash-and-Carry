@@ -38,6 +38,14 @@ final class ProductRepositoryImpl: ProductRepository {
     }
     
     func fetchCategories() async throws -> [CategoryResponse] {
-        try await productService.fetchCategories()
+        let categories = try await productService.fetchCategories()
+        
+        productLocalDataSource.saveCategories(categories)
+        
+        return categories
+    }
+    
+    func getCachedCategories() -> [CategoryResponse] {
+        productLocalDataSource.getCategories()
     }
 }
